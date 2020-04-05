@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4465785533495205181}
   - component: {fileID: 4465785533495205180}
   - component: {fileID: 4465785533495205183}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -627,8 +627,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4465785534488710364}
-  m_Layer: 0
-  m_Name: BasicBend 1
+  m_Layer: 8
+  m_Name: OpenBend
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

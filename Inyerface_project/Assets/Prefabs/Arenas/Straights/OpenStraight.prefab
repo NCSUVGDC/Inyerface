@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5856601099113819013}
-  m_Layer: 0
-  m_Name: BasicStraight 1
+  m_Layer: 8
+  m_Name: OpenStraight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 5856601100099992164}
   - component: {fileID: 5856601100099992165}
   - component: {fileID: 5856601100099992166}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
