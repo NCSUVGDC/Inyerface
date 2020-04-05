@@ -12,12 +12,17 @@ public class MapGenerator : MonoBehaviour
     public float gridSize = 40f;
     public Transform startPoint;
 
+    public bool useSeed;
+    public int seed;
+
     public TileEntry[] hub_prefabs;
     public TileEntry[] t_prefabs;
     public TileEntry[] straight_prefabs;
     public TileEntry[] bend_prefabs;
     public TileEntry[] start_prefabs;
     public TileEntry[] end_prefabs;
+
+
 
     public bool paintCriticalPath = false;
     public Material critPathMaterial;
@@ -28,7 +33,13 @@ public class MapGenerator : MonoBehaviour
             for (int j = 0; j < map.GetLength(1); j++)
                 map[i, j] = new Arena();
 
-        System.Random rand = new System.Random();
+        System.Random rand;
+        if (useSeed)
+        {
+            rand = new System.Random(seed);
+        }
+        else
+            rand = new System.Random();
         if(GenerateMap(rand))        
             PopulateMap(rand);
     }
@@ -123,7 +134,7 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject weightedChance(ref TileEntry[] tileEntries, System.Random rand)
     {
-        int total = 1;
+        int total = 0;
         foreach(TileEntry entry in tileEntries)
         {
             total += entry.weight;
@@ -141,6 +152,7 @@ public class MapGenerator : MonoBehaviour
                 sum += entry.weight;
             }
         }
+        Debug.LogError("didn't get a weighted chance");
         return null;
     }
 

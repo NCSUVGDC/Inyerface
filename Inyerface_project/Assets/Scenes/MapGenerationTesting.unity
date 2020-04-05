@@ -731,9 +731,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f6bd487ace72184ba858e98b78503a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  openWallWeight: 1
+  openWallWeight: 2
   gridSize: 40
   startPoint: {fileID: 307438875}
+  useSeed: 0
+  seed: 6969
   hub_prefabs:
   - prefab: {fileID: 8388243880211988860, guid: 1df8169213b8da84c8ed05d9ca54a2a0,
       type: 3}
