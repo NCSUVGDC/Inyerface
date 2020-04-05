@@ -6,12 +6,15 @@ using UnityEngine;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField]
-    private Arena[,] map = new Arena[5,5];
-
+    public Arena[,] map = new Arena[5,5];
+    public int openWallWeight = 1; //Ratio of open walls to closed walls when deciding if it should be open or close. Higher values give more open
     // Start is called before the first frame update
     void Start()
     {
-        
+        for (int i = 0; i < map.GetLength(0); i++)
+            for (int j = 0; j < map.GetLength(1); j++)
+                map[i, j] = new Arena();
+        GenerateMap();
     }
 
     private void GenerateMap()
@@ -23,151 +26,211 @@ public class MapGenerator : MonoBehaviour
         map[0, startTile_x]._startTile = true;
         map[0, endTile_x]._endTile = true;
 
-        Point nextTile = new Point(0, startTile_x);
-        Point endTile = new Point(0, endTile_x);
+        Point nextTile = new Point( startTile_x, 0);
+        Point endTile = new Point(endTile_x, 4);
         while(nextTile != endTile)
         {
-            nextTile = ChooseTileType(nextTile, endTile, rand);   
+            Debug.Log("currentTile: " + nextTile.ToString() + ", endTile: " + endTile.ToString() );
+            Point currentTile = nextTile;
+            nextTile = chooseNextTile(currentTile, endTile, rand);
+            if(nextTile == new Point(-1,-1))
+            {
+                Debug.Log("got stuck");
+                break;
+            }
+            
+            ChooseTileType(currentTile, nextTile, rand);
         }
 
+        Debug.Log("Finished choosing layout");
     }
     
-    private Point ChooseTileType(Point point, Point exit, System.Random rand) //pass in random to allow seeding
+
+    private Point chooseNextTile(Point point, Point exit, System.Random rand)
     {
-        //mark walls that need to be closed as true
-        bool[] closedWalls = new bool[4]; // indexes follow orientation enum
+        List<int> neighbors = getUnassignedNeighbors(point);
+        List<int> candidates = new List<int>();
 
-        //mark potential critical path nextTiles
-        List<Orientation> critPathCandidates = new List<Orientation>();
-
-        //Check neighbors
-        //Checking west neighbor
-        if(point._x - 1 >= 0) 
+        for(int i = 0; i < neighbors.Count; i++)
         {
-            if (map[point._x - 1, point._y]._arenaType == ArenaType.Unassigned)
+            if(exitReachable(getTwoDimIndex(neighbors[i]), exit))
             {
-                // this neighbor can pass on critical path
-                critPathCandidates.Add(Orientation.West);
+                candidates.Add(neighbors[i]);
+            }
+        }
+
+        if (candidates.Count == 0)
+            return new Point(-1, -1);
+
+
+        return getTwoDimIndex(candidates[rand.Next(candidates.Count)]); //choose a random candidate
+
+    }
+
+    //Assigns open sides and sets fields in the Arena class that specify orientation and type
+    private void ChooseTileType(Point point, Point nextPoint, System.Random rand) //pass in random to allow seeding
+    {
+        Arena currentArena = map[point._x, point._y];
+        Arena nextArena = map[nextPoint._x, nextPoint._y];
+        if (nextPoint._x == point._x)
+        {
+            if(nextPoint._y == point._y + 1)
+            {
+                //nextpoint is south of point
+                currentArena._openEdges[(int)Orientation.South] = true;
+                nextArena._openEdges[(int)Orientation.North] = true;
             }
             else
+            if (nextPoint._y == point._y - 1)
             {
-                //this neighbor cannot pass on critical path
+                //nextPoint is north of point
+                currentArena._openEdges[(int)Orientation.North] = true;
+               nextArena._openEdges[(int)Orientation.South] = true;
             }
         }
         else
+        if(nextPoint._y == point._y)
         {
-            //this neighbor is on the edge, make sure this edge is closed
-            closedWalls[(int)Orientation.West] = true;
-        }
-
-        //checking East neighbor
-        if (point._x + 1 <= 4)
-        {
-            if (map[point._x + 1, point._y]._arenaType == ArenaType.Unassigned)
+            if(nextPoint._x == point._x + 1)
             {
-                // this neighbor can pass on critical path
-                critPathCandidates.Add(Orientation.East);
+                //nextpoint is east of point
+                currentArena._openEdges[(int)Orientation.East] = true;
+                nextArena._openEdges[(int)Orientation.West] = true;
             }
             else
+            if(nextPoint._x == point._x -1 )
             {
-                //this neighbor cannot pass on critical path
+                //nextpoint is west of point
+                currentArena._openEdges[(int)Orientation.West] = true;
+                nextArena._openEdges[(int)Orientation.East] = true;
             }
         }
-        else
+       
+        //If a side is closed, roll to open it
+        int openCount = 0;
+        for(int i = 0; i < 4; i++)
         {
-            //this neighbor is on the edge, make sure this edge is closed
-            closedWalls[(int)Orientation.East] = true;
-
-        }
-
-        //checking North neighbor
-        if (point._y - 1 >= 0)
-        {
-            if (map[point._x, point._y - 1]._arenaType == ArenaType.Unassigned)
+            if(!currentArena._openEdges[i])
             {
-                // this neighbor can pass on critical path
-                critPathCandidates.Add(Orientation.North);
+                if (rand.Next(openWallWeight) != 0)
+                    currentArena._openEdges[i] = true;
             }
-            else
-            {
-                //this neighbor cannot pass on critical path
-            }
-        }
-        else
-        {
-            //this neighbor is on the edge, make sure this edge is closed
-            closedWalls[(int)Orientation.North] = true;
-        }
 
-        //checking South
-        if (point._x + 1 <= 4)
+            if (currentArena._openEdges[i])
+                openCount++;
+        }
+        //if not enough sides are open, pick a valid one to open
+        if(openCount == 1)
         {
-            if (map[point._x, point._y + 1]._arenaType == ArenaType.Unassigned)
+            
+            if(point._x + 1 <= 4 && !currentArena._openEdges[(int)Orientation.East])
             {
-                // this neighbor can pass on critical path
-                critPathCandidates.Add(Orientation.South);
+                currentArena._openEdges[(int)Orientation.East] = true;
+                openCount++;
             }
             else
+            if (point._x - 1 >= 0 && !currentArena._openEdges[(int)Orientation.West])
             {
-                //this neighbor cannot pass on critical path 
+                currentArena._openEdges[(int)Orientation.West] = true;
+                openCount++;
+            }
+            else
+            if (point._y + 1 <= 4 && !currentArena._openEdges[(int)Orientation.South])
+            {
+                currentArena._openEdges[(int)Orientation.South] = true;
+                openCount++;
+            }
+            else
+            if (point._y - 1 >= 0 && !currentArena._openEdges[(int)Orientation.North])
+            {
+                currentArena._openEdges[(int)Orientation.North] = true;
+                openCount++;
             }
         }
-        else
+
+        bool[] open = currentArena._openEdges;
+        switch (openCount)
         {
-            //this neighbor is on the edge, make sure this edge is closed
-            closedWalls[(int)Orientation.South] = true;
-        }
-
-        //Choose nextTile position
-
-        //remove if the candidate does not have a path to the exit
-        for (int i = 0; i < critPathCandidates.Count; i++)
-        {
-            bool reachable = false;
-            switch (critPathCandidates[i])
-            {
-                case Orientation.North:
-                    reachable = exitReachable(new Point(point._x, point._y - 1), exit);
-                    break;
-                case Orientation.East:
-                    reachable = exitReachable(new Point(point._x + 1, point._y), exit );
-                    break;
-                case Orientation.South:
-                    reachable = exitReachable(new Point(point._x, point._y + 1), exit);
-                    break;
-                case Orientation.West:
-                    reachable = exitReachable(new Point(point._x - 1, point._y), exit);
-                    break;
-                case Orientation.Unassigned:
-                    reachable = false;
-                    break;
-                default:
-                    reachable = false;
-                    break;
-            }
-            if (!reachable)
-                critPathCandidates.RemoveAt(i);
-        }
-
-        //choose next path and return the point
-        int nextCritPath = rand.Next(critPathCandidates.Count);
-
-        Orientation nextDirection = critPathCandidates[nextCritPath];
-        switch (nextDirection)
-        {
-            case Orientation.North:
-                return new Point(point._x, point._y - 1);
-            case Orientation.East:
-                return new Point(point._x, point._y - 1);
-            case Orientation.South:
-                return new Point(point._x, point._y - 1);
-            case Orientation.West:
-                return new Point(point._x, point._y - 1);
-            case Orientation.Unassigned:
-                return null;
+            case 0:
+                Debug.LogError("0 edges open");
+                break;
+            case 1:
+                Debug.LogError("1 edge open");
+                break;
+            case 2:
+                if(open[(int) Orientation.West])
+                {
+                    if(open[(int) Orientation.South])
+                    {
+                        currentArena._orientation = Orientation.North;
+                        currentArena._arenaType = ArenaType.Bend;
+                    }
+                    else
+                    if(open[(int) Orientation.North])
+                    {
+                        currentArena._orientation = Orientation.East;
+                        currentArena._arenaType = ArenaType.Bend;
+                    }
+                    else
+                    if (open[(int)Orientation.East])
+                    {
+                        currentArena._orientation = Orientation.North;
+                        currentArena._arenaType = ArenaType.Straight;
+                    }
+                }
+                else
+                if (open[(int) Orientation.North])
+                {
+                    if(open[(int) Orientation.East])
+                    {
+                        currentArena._orientation = Orientation.South;
+                        currentArena._arenaType = ArenaType.Bend;
+                    }
+                    else
+                    if(open[(int) Orientation.South])
+                    {
+                        currentArena._orientation = Orientation.East;
+                        currentArena._arenaType = ArenaType.Straight;
+                    }
+                }
+                if(open[(int) Orientation.South] && open[(int) Orientation.East])
+                {
+                    currentArena._orientation = Orientation.West;
+                    currentArena._arenaType = ArenaType.Bend;
+                }
+                break;
+            case 3:
+                currentArena._arenaType = ArenaType.T;
+                if (!open[(int)Orientation.North])
+                {
+                    currentArena._orientation = Orientation.North;
+                }
+                else
+                if (!open[(int)Orientation.East])
+                {
+                    currentArena._orientation = Orientation.East;
+                }
+                else
+                if (!open[(int)Orientation.South])
+                {
+                    currentArena._orientation = Orientation.South;
+                }
+                else
+                if (!open[(int)Orientation.West])
+                {
+                    currentArena._orientation = Orientation.West;
+                }
+                break;
+            case 4:
+                currentArena._orientation = Orientation.North;
+                currentArena._arenaType = ArenaType.Hub;
+                break;
             default:
-                return null;
+                Debug.LogError("Open side count not expected");
+                break;
         }
+
+
     }
 
     private bool exitReachable(Point tile, Point exit)
@@ -175,28 +238,31 @@ public class MapGenerator : MonoBehaviour
         int exitIndex = getOneDimIndex(exit);
         bool[] visited = new bool[25]; //Map the grid to a 1D array
 
+        map[tile._x, tile._y]._arenaType = ArenaType.assigning;
+
         Queue<int> queue = new Queue<int>();
 
         //set first tile as visited
-        visited[getOneDimIndex(tile)] = true;
+        int firstTile = getOneDimIndex(tile);
+        visited[firstTile] = true;
         queue.Enqueue(getOneDimIndex(tile));
 
-        while(!(queue.Count == 0))
+        while(queue.Count != 0)
         {
             int current = queue.Dequeue();
+            if (current == exitIndex)
+                return true;
             List<int> neighbors = getUnassignedNeighbors(getTwoDimIndex(current));
-
             for (int i = 0; i < neighbors.Count; i++)
             {
                 if (neighbors[i] == exitIndex)
                     return true;
                 else
-                {
-                    if(!visited[neighbors[i]]) //if this neighbor has not been visited
+                    if (!visited[neighbors[i]]) //if this neighbor has not been visited
                     {
+                        visited[neighbors[i]] = true;
                         queue.Enqueue(neighbors[i]);
                     }
-                }
             }
 
         }
@@ -216,6 +282,7 @@ public class MapGenerator : MonoBehaviour
 
     private Point getTwoDimIndex(int index)
     {
+        
         int x = index % 5;
         int y = index / 5;
         return new Point(x, y);
@@ -230,8 +297,8 @@ public class MapGenerator : MonoBehaviour
         {
             if (map[point._x - 1, point._y]._arenaType == ArenaType.Unassigned)
             {
-                // this neighbor can pass on critical path
-                unassignedNeighbors.Add(getOneDimIndex(point._x - 1, point._y)); 
+               
+                unassignedNeighbors.Add(getOneDimIndex(point._x - 1, point._y));
             }
         }
 
@@ -240,7 +307,7 @@ public class MapGenerator : MonoBehaviour
         {
             if (map[point._x + 1, point._y]._arenaType == ArenaType.Unassigned)
             {
-                // this neighbor can pass on critical path
+                
                 unassignedNeighbors.Add(getOneDimIndex(point._x + 1, point._y));
             }
         }
@@ -248,19 +315,19 @@ public class MapGenerator : MonoBehaviour
         //checking North neighbor
         if (point._y - 1 >= 0)
         {
+            
             if (map[point._x, point._y - 1]._arenaType == ArenaType.Unassigned)
             {
-                // this neighbor can pass on critical path
                 unassignedNeighbors.Add(getOneDimIndex(point._x, point._y - 1));
             }
         }
 
         //checking South
-        if (point._x + 1 <= 4)
+        if (point._y + 1 <= 4)
         {
+            
             if (map[point._x, point._y + 1]._arenaType == ArenaType.Unassigned)
             {
-                // this neighbor is unassigned neighbor
                 unassignedNeighbors.Add(getOneDimIndex(point._x, point._y + 1));
             }
         }
@@ -306,6 +373,11 @@ public class Point
     {
         return base.GetHashCode();
     }
+
+    public override string ToString()
+    {
+        return "( " + _x + " , " + _y + " )";
+    }
 }
 public enum ArenaType
 {
@@ -313,6 +385,7 @@ public enum ArenaType
     T,
     Straight,
     Bend,
+    assigning,
     Unassigned
 }
 
@@ -328,13 +401,15 @@ public enum Orientation
     Unassigned
 }
 
+[System.Serializable]
 public class Arena
 {
     public ArenaType _arenaType = ArenaType.Unassigned;
     public Orientation _orientation = Orientation.Unassigned;
     public bool _startTile = false;
     public bool _endTile = false;
-    //true if closed
-    public bool[] _closedEdges = new bool[4] { true, true, true, true }; //follows indexes shown in Orientation enum
+    public bool[] _openEdges = { false, false, false, false };
+
+    
 
 }
