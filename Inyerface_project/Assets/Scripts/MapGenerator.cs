@@ -8,41 +8,170 @@ public class MapGenerator : MonoBehaviour
     [SerializeField]
     public Arena[,] map = new Arena[5,5];
     public int openWallWeight = 1; //Ratio of open walls to closed walls when deciding if it should be open or close. Higher values give more open
+
+    public float gridSize = 40f;
+    public Transform startPoint;
+
+    public GameObject[] hub_prefabs;
+    public GameObject[] t_prefabs;
+    public GameObject[] straight_prefabs;
+    public GameObject[] bend_prefabs;
+
+    public Material startMaterial;
+    public Material endMaterial;
+    public Material critPathMaterial;
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < map.GetLength(0); i++)
             for (int j = 0; j < map.GetLength(1); j++)
                 map[i, j] = new Arena();
-        GenerateMap();
+
+        System.Random rand = new System.Random();
+        if(GenerateMap(rand))        
+            PopulateMap(rand);
     }
 
-    private void GenerateMap()
+    private void PopulateMap(System.Random rand)
     {
-        System.Random rand = new System.Random();
+        Arena currentArena;
+        UnityEngine.Vector3 startPosition = startPoint.position;
+
+        for(int x = 0; x < map.GetLength(0); x++)
+            for(int y = 0; y < map.GetLength(1); y++)
+            {
+                currentArena = map[x, y];
+                //my grid is in the x-z plane
+                UnityEngine.Vector3 spawnLoc = new UnityEngine.Vector3(- (x * gridSize) + startPosition.x, startPosition.z, y * gridSize + startPosition.y );
+                UnityEngine.Quaternion spawnRot = new UnityEngine.Quaternion();
+
+                switch (currentArena._orientation)
+                {
+                    case Orientation.North:
+                        spawnRot = UnityEngine.Quaternion.Euler(0, 180, 0);
+                        break;
+                    case Orientation.East:
+                        spawnRot = UnityEngine.Quaternion.Euler(0, 270, 0);
+                        break;
+                    case Orientation.South:
+                        spawnRot = UnityEngine.Quaternion.Euler(0, 0, 0);
+                        break;
+                    case Orientation.West:
+                        spawnRot = UnityEngine.Quaternion.Euler(0, 90, 0);
+                        break;
+                    case Orientation.Unassigned:
+                        spawnRot = spawnRot = UnityEngine.Quaternion.Euler(0, 0, 0);
+                        Debug.LogError("Orientation was unassigned when spawning tile");
+                        break;
+                    default:
+                        spawnRot = spawnRot = UnityEngine.Quaternion.Euler(0, 0, 0);
+                        Debug.LogError("Orientation was unexpected when spawning tile");
+                        break;
+                }
+                Debug.Log("Arena being spawned: " + currentArena._arenaType.ToString() +  " "  +currentArena._orientation.ToString());
+                GameObject spawn = getRandomArena(currentArena._arenaType, rand);
+                if (spawn != null)
+                {
+                    
+                    spawn = Instantiate(spawn, spawnLoc, spawnRot);
+                    if (currentArena._startTile)
+                    {
+                        spawn.GetComponentInChildren<Renderer>().material = startMaterial;
+                    }
+                    else
+                        if(currentArena._endTile)
+                    {
+                        spawn.GetComponentInChildren<Renderer>().material = endMaterial;
+                    }
+                    else if(currentArena._criticalPath)
+                    {
+                        spawn.GetComponentInChildren<Renderer>().material = critPathMaterial;
+                    }
+                    spawn.name = "( " + x + " , " + y + " )";
+                }
+            }
+    }
+
+    private GameObject getRandomArena(ArenaType arenaType, System.Random rand)
+    {
+        int randomChoice;
+        switch (arenaType)
+        {
+            case ArenaType.Hub:
+                randomChoice = rand.Next(hub_prefabs.Length);
+                return hub_prefabs[randomChoice];
+                
+            case ArenaType.T:
+                randomChoice = rand.Next(t_prefabs.Length);
+                return t_prefabs[randomChoice];
+                
+            case ArenaType.Straight:
+                randomChoice = rand.Next(t_prefabs.Length);
+                return straight_prefabs[randomChoice];
+                
+            case ArenaType.Bend:
+                randomChoice = rand.Next(hub_prefabs.Length);
+                return bend_prefabs[randomChoice];
+                
+            case ArenaType.assigning:
+                Debug.LogError("ArenaType is assigning while trying to spawn");
+                return null;
+                
+            case ArenaType.Unassigned:
+                Debug.LogError("ArenaType is unassigned while trying to spawn");
+                return null;
+                
+            default:
+                Debug.LogError("ArenaType is null while trying to spawn");
+                return null;
+        }
+    }
+
+    private bool GenerateMap(System.Random rand)
+    {
+        
         int startTile_x = rand.Next(0, 5); //Choose which of the 5 start blocks will be the beginning (0,rand)
         int endTile_x = rand.Next(0, 5);   //Choose end tile (4,rand)
 
-        map[0, startTile_x]._startTile = true;
-        map[0, endTile_x]._endTile = true;
+        map[startTile_x,0]._startTile = true;
+        map[endTile_x,4]._endTile = true;
 
         Point nextTile = new Point( startTile_x, 0);
         Point endTile = new Point(endTile_x, 4);
+
+        map[startTile_x, 0]._criticalPath = true;
         while(nextTile != endTile)
         {
-            Debug.Log("currentTile: " + nextTile.ToString() + ", endTile: " + endTile.ToString() );
             Point currentTile = nextTile;
+            
+            
             nextTile = chooseNextTile(currentTile, endTile, rand);
+            map[nextTile._x, nextTile._y]._criticalPath = true;
             if(nextTile == new Point(-1,-1))
             {
-                Debug.Log("got stuck");
-                break;
+                Debug.LogError("got stuck");
+                return false;
             }
             
             ChooseTileType(currentTile, nextTile, rand);
+            Debug.Log("currentTile: " + currentTile.ToString() + " " + map[currentTile._x, currentTile._y]._arenaType.ToString() + " " + map[currentTile._x, currentTile._y]._orientation.ToString() + ", endTile: " + endTile.ToString());
         }
 
-        Debug.Log("Finished choosing layout");
+        Debug.Log("Finished critical path");
+
+        foreach(Arena arena in map)
+        {
+            if(arena._arenaType == ArenaType.Unassigned)
+            {
+                int type = rand.Next(3);
+                arena._arenaType = (ArenaType) type;
+
+                int orientation = rand.Next(3);
+                arena._orientation = (Orientation) orientation;
+
+            }
+        }
+        return true;
     }
     
 
@@ -50,9 +179,11 @@ public class MapGenerator : MonoBehaviour
     {
         List<int> neighbors = getUnassignedNeighbors(point);
         List<int> candidates = new List<int>();
-
+        if (neighbors.Count == 0)
+            Debug.LogError("No unassigned neighbors");
         for(int i = 0; i < neighbors.Count; i++)
         {
+            
             if(exitReachable(getTwoDimIndex(neighbors[i]), exit))
             {
                 candidates.Add(neighbors[i]);
@@ -238,15 +369,12 @@ public class MapGenerator : MonoBehaviour
         int exitIndex = getOneDimIndex(exit);
         bool[] visited = new bool[25]; //Map the grid to a 1D array
 
-        map[tile._x, tile._y]._arenaType = ArenaType.assigning;
-
         Queue<int> queue = new Queue<int>();
 
         //set first tile as visited
         int firstTile = getOneDimIndex(tile);
         visited[firstTile] = true;
-        queue.Enqueue(getOneDimIndex(tile));
-
+        queue.Enqueue(firstTile);
         while(queue.Count != 0)
         {
             int current = queue.Dequeue();
@@ -255,18 +383,20 @@ public class MapGenerator : MonoBehaviour
             List<int> neighbors = getUnassignedNeighbors(getTwoDimIndex(current));
             for (int i = 0; i < neighbors.Count; i++)
             {
+
                 if (neighbors[i] == exitIndex)
+                {
                     return true;
+                }
                 else
                     if (!visited[neighbors[i]]) //if this neighbor has not been visited
-                    {
-                        visited[neighbors[i]] = true;
-                        queue.Enqueue(neighbors[i]);
-                    }
+                {
+                    visited[neighbors[i]] = true;
+                    queue.Enqueue(neighbors[i]);
+                }
             }
 
         }
-
         return false;
     }
 
@@ -295,7 +425,7 @@ public class MapGenerator : MonoBehaviour
 
         if (point._x - 1 >= 0)
         {
-            if (map[point._x - 1, point._y]._arenaType == ArenaType.Unassigned)
+            if (!(map[point._x - 1, point._y]._criticalPath))
             {
                
                 unassignedNeighbors.Add(getOneDimIndex(point._x - 1, point._y));
@@ -305,7 +435,7 @@ public class MapGenerator : MonoBehaviour
         //checking East neighbor
         if (point._x + 1 <= 4)
         {
-            if (map[point._x + 1, point._y]._arenaType == ArenaType.Unassigned)
+            if (!(map[point._x + 1, point._y]._criticalPath))
             {
                 
                 unassignedNeighbors.Add(getOneDimIndex(point._x + 1, point._y));
@@ -316,7 +446,7 @@ public class MapGenerator : MonoBehaviour
         if (point._y - 1 >= 0)
         {
             
-            if (map[point._x, point._y - 1]._arenaType == ArenaType.Unassigned)
+            if (!(map[point._x, point._y - 1]._criticalPath))
             {
                 unassignedNeighbors.Add(getOneDimIndex(point._x, point._y - 1));
             }
@@ -326,7 +456,7 @@ public class MapGenerator : MonoBehaviour
         if (point._y + 1 <= 4)
         {
             
-            if (map[point._x, point._y + 1]._arenaType == ArenaType.Unassigned)
+            if (!(map[point._x, point._y + 1]._criticalPath))
             {
                 unassignedNeighbors.Add(getOneDimIndex(point._x, point._y + 1));
             }
@@ -409,6 +539,7 @@ public class Arena
     public bool _startTile = false;
     public bool _endTile = false;
     public bool[] _openEdges = { false, false, false, false };
+    public bool _criticalPath = false;
 
     
 
