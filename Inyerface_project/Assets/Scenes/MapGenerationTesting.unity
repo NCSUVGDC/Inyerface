@@ -735,19 +735,34 @@ MonoBehaviour:
   gridSize: 40
   startPoint: {fileID: 307438875}
   hub_prefabs:
-  - {fileID: 8388243880211988860, guid: 4149f2ceef72bad41963903ee55ed4d2, type: 3}
-  - {fileID: 8388243880211988860, guid: 1df8169213b8da84c8ed05d9ca54a2a0, type: 3}
+  - prefab: {fileID: 8388243880211988860, guid: 1df8169213b8da84c8ed05d9ca54a2a0,
+      type: 3}
+    weight: 48
+  - prefab: {fileID: 8388243880211988860, guid: 4149f2ceef72bad41963903ee55ed4d2,
+      type: 3}
+    weight: 32
   t_prefabs:
-  - {fileID: 845980907169857319, guid: 05963bb85234968429320acbdb660e5e, type: 3}
-  - {fileID: 845980907169857319, guid: 599b6ee1c9a372741aead9dcc1f07913, type: 3}
+  - prefab: {fileID: 845980907169857319, guid: 05963bb85234968429320acbdb660e5e, type: 3}
+    weight: 32
+  - prefab: {fileID: 845980907169857319, guid: 599b6ee1c9a372741aead9dcc1f07913, type: 3}
+    weight: 51
   straight_prefabs:
-  - {fileID: 5856601099113819014, guid: 507861d7ea19e7a4aa0740f2025fa4cd, type: 3}
-  - {fileID: 5856601099113819014, guid: 7ebd1e1cb2f29d14abc2cd107f679e6f, type: 3}
+  - prefab: {fileID: 5856601099113819014, guid: 507861d7ea19e7a4aa0740f2025fa4cd,
+      type: 3}
+    weight: 30
+  - prefab: {fileID: 5856601099113819014, guid: 7ebd1e1cb2f29d14abc2cd107f679e6f,
+      type: 3}
+    weight: 56
   bend_prefabs:
-  - {fileID: 4465785534488710367, guid: 5d41c311d7fbbb546b1dd3bdb8e0a90c, type: 3}
-  - {fileID: 4465785534488710367, guid: dbc21e54eac8e0c45ae79ff2397403c2, type: 3}
+  - prefab: {fileID: 4465785534488710367, guid: 5d41c311d7fbbb546b1dd3bdb8e0a90c,
+      type: 3}
+    weight: 33
+  - prefab: {fileID: 4465785534488710367, guid: dbc21e54eac8e0c45ae79ff2397403c2,
+      type: 3}
+    weight: 56
   startMaterial: {fileID: 2100000, guid: 842a8e0077b59ba4cbd7ea57701fcac5, type: 2}
   endMaterial: {fileID: 2100000, guid: d4c134ea21cb28346b1a314c26f1f39a, type: 2}
+  critPathMaterial: {fileID: 2100000, guid: 089445c73955aa94ca4f9ac6a88a0aec, type: 2}
 --- !u!4 &307438875
 Transform:
   m_ObjectHideFlags: 0

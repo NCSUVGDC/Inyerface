@@ -12,10 +12,10 @@ public class MapGenerator : MonoBehaviour
     public float gridSize = 40f;
     public Transform startPoint;
 
-    public GameObject[] hub_prefabs;
-    public GameObject[] t_prefabs;
-    public GameObject[] straight_prefabs;
-    public GameObject[] bend_prefabs;
+    public TileEntry[] hub_prefabs;
+    public TileEntry[] t_prefabs;
+    public TileEntry[] straight_prefabs;
+    public TileEntry[] bend_prefabs;
 
     public Material startMaterial;
     public Material endMaterial;
@@ -94,25 +94,20 @@ public class MapGenerator : MonoBehaviour
 
     private GameObject getRandomArena(ArenaType arenaType, System.Random rand)
     {
-        int randomChoice;
         switch (arenaType)
         {
             case ArenaType.Hub:
-                randomChoice = rand.Next(hub_prefabs.Length);
-                return hub_prefabs[randomChoice];
+                return weightedChance(ref hub_prefabs,rand);
                 
             case ArenaType.T:
-                randomChoice = rand.Next(t_prefabs.Length);
-                return t_prefabs[randomChoice];
-                
+                return weightedChance(ref t_prefabs, rand);
+
             case ArenaType.Straight:
-                randomChoice = rand.Next(t_prefabs.Length);
-                return straight_prefabs[randomChoice];
-                
+                return weightedChance(ref straight_prefabs, rand);
+
             case ArenaType.Bend:
-                randomChoice = rand.Next(hub_prefabs.Length);
-                return bend_prefabs[randomChoice];
-                
+                return weightedChance(ref bend_prefabs, rand);
+
             case ArenaType.assigning:
                 Debug.LogError("ArenaType is assigning while trying to spawn");
                 return null;
@@ -125,6 +120,29 @@ public class MapGenerator : MonoBehaviour
                 Debug.LogError("ArenaType is null while trying to spawn");
                 return null;
         }
+    }
+
+    private GameObject weightedChance(ref TileEntry[] tileEntries, System.Random rand)
+    {
+        int total = 1;
+        foreach(TileEntry entry in tileEntries)
+        {
+            total += entry.weight;
+        }
+        int randomResult = rand.Next(total);
+        int sum = 0;
+        foreach( TileEntry entry in tileEntries)
+        {
+            if (randomResult < (sum + entry.weight))
+            {
+                return entry.prefab;
+            }
+            else
+            {
+                sum += entry.weight;
+            }
+        }
+        return null;
     }
 
     private bool GenerateMap(System.Random rand)
@@ -540,7 +558,13 @@ public class Arena
     public bool _endTile = false;
     public bool[] _openEdges = { false, false, false, false };
     public bool _criticalPath = false;
-
     
+}
 
+[System.Serializable]
+public class TileEntry
+{
+    public GameObject prefab;
+    [Range(1,100)]
+    public int weight = 1;
 }
