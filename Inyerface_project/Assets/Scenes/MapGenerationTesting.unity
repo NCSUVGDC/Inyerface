@@ -760,8 +760,15 @@ MonoBehaviour:
   - prefab: {fileID: 4465785534488710367, guid: dbc21e54eac8e0c45ae79ff2397403c2,
       type: 3}
     weight: 56
-  startMaterial: {fileID: 2100000, guid: 842a8e0077b59ba4cbd7ea57701fcac5, type: 2}
-  endMaterial: {fileID: 2100000, guid: d4c134ea21cb28346b1a314c26f1f39a, type: 2}
+  start_prefabs:
+  - prefab: {fileID: 8388243880211988860, guid: db75a66346f25ad4298a9c7c203fd2f5,
+      type: 3}
+    weight: 46
+  end_prefabs:
+  - prefab: {fileID: 8388243880211988860, guid: 32fbab437fe86ec44b69e47410a95247,
+      type: 3}
+    weight: 17
+  paintCriticalPath: 1
   critPathMaterial: {fileID: 2100000, guid: 089445c73955aa94ca4f9ac6a88a0aec, type: 2}
 --- !u!4 &307438875
 Transform:

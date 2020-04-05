@@ -16,9 +16,10 @@ public class MapGenerator : MonoBehaviour
     public TileEntry[] t_prefabs;
     public TileEntry[] straight_prefabs;
     public TileEntry[] bend_prefabs;
+    public TileEntry[] start_prefabs;
+    public TileEntry[] end_prefabs;
 
-    public Material startMaterial;
-    public Material endMaterial;
+    public bool paintCriticalPath = false;
     public Material critPathMaterial;
     // Start is called before the first frame update
     void Start()
@@ -74,16 +75,8 @@ public class MapGenerator : MonoBehaviour
                 {
                     
                     spawn = Instantiate(spawn, spawnLoc, spawnRot);
-                    if (currentArena._startTile)
-                    {
-                        spawn.GetComponentInChildren<Renderer>().material = startMaterial;
-                    }
-                    else
-                        if(currentArena._endTile)
-                    {
-                        spawn.GetComponentInChildren<Renderer>().material = endMaterial;
-                    }
-                    else if(currentArena._criticalPath)
+
+                    if(currentArena._criticalPath && paintCriticalPath && !currentArena._startTile && !currentArena._endTile)
                     {
                         spawn.GetComponentInChildren<Renderer>().material = critPathMaterial;
                     }
@@ -107,6 +100,12 @@ public class MapGenerator : MonoBehaviour
 
             case ArenaType.Bend:
                 return weightedChance(ref bend_prefabs, rand);
+
+            case ArenaType.Start:
+                return weightedChance(ref start_prefabs, rand);
+
+            case ArenaType.End:
+                return weightedChance(ref end_prefabs, rand);
 
             case ArenaType.assigning:
                 Debug.LogError("ArenaType is assigning while trying to spawn");
@@ -221,6 +220,8 @@ public class MapGenerator : MonoBehaviour
     {
         Arena currentArena = map[point._x, point._y];
         Arena nextArena = map[nextPoint._x, nextPoint._y];
+
+
         if (nextPoint._x == point._x)
         {
             if(nextPoint._y == point._y + 1)
@@ -254,49 +255,83 @@ public class MapGenerator : MonoBehaviour
                 nextArena._openEdges[(int)Orientation.East] = true;
             }
         }
-       
-        //If a side is closed, roll to open it
+
         int openCount = 0;
-        for(int i = 0; i < 4; i++)
+
+        if (nextArena._endTile)
         {
-            if(!currentArena._openEdges[i])
+            bool[] openEnd = nextArena._openEdges;
+            nextArena._arenaType = ArenaType.End;
+            if (openEnd[(int)Orientation.West])
             {
-                if (rand.Next(openWallWeight) != 0)
-                    currentArena._openEdges[i] = true;
+                nextArena._orientation = Orientation.West;
+            }
+            else
+                if (openEnd[(int)Orientation.East])
+            {
+                nextArena._orientation = Orientation.East;
+            }
+            else
+                if (openEnd[(int)Orientation.North])
+            {
+                nextArena._orientation = Orientation.North;
+            }
+            else
+                if (openEnd[(int)Orientation.South])
+            {
+                nextArena._orientation = Orientation.South;
             }
 
-            if (currentArena._openEdges[i])
-                openCount++;
-        }
-        //if not enough sides are open, pick a valid one to open
-        if(openCount == 1)
-        {
-            
-            if(point._x + 1 <= 4 && !currentArena._openEdges[(int)Orientation.East])
-            {
-                currentArena._openEdges[(int)Orientation.East] = true;
-                openCount++;
-            }
-            else
-            if (point._x - 1 >= 0 && !currentArena._openEdges[(int)Orientation.West])
-            {
-                currentArena._openEdges[(int)Orientation.West] = true;
-                openCount++;
-            }
-            else
-            if (point._y + 1 <= 4 && !currentArena._openEdges[(int)Orientation.South])
-            {
-                currentArena._openEdges[(int)Orientation.South] = true;
-                openCount++;
-            }
-            else
-            if (point._y - 1 >= 0 && !currentArena._openEdges[(int)Orientation.North])
-            {
-                currentArena._openEdges[(int)Orientation.North] = true;
-                openCount++;
-            }
+            Debug.Log("setting nextArena to end: " + nextArena._orientation.ToString());
         }
 
+        if (currentArena._startTile)
+        {
+            currentArena._arenaType = ArenaType.Start;
+            openCount = 1;
+        }
+        else         //If a side is closed, roll to open it
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if (!currentArena._openEdges[i])
+                {
+                    if (rand.Next(openWallWeight) != 0)
+                        currentArena._openEdges[i] = true;
+                }
+
+                if (currentArena._openEdges[i])
+                    openCount++;
+            }
+            //if not enough sides are open, pick a valid one to open
+            if (openCount == 1)
+            {
+
+                if (point._x + 1 <= 4 && !currentArena._openEdges[(int)Orientation.East])
+                {
+                    currentArena._openEdges[(int)Orientation.East] = true;
+                    openCount++;
+                }
+                else
+                if (point._x - 1 >= 0 && !currentArena._openEdges[(int)Orientation.West])
+                {
+                    currentArena._openEdges[(int)Orientation.West] = true;
+                    openCount++;
+                }
+                else
+                if (point._y + 1 <= 4 && !currentArena._openEdges[(int)Orientation.South])
+                {
+                    currentArena._openEdges[(int)Orientation.South] = true;
+                    openCount++;
+                }
+                else
+                if (point._y - 1 >= 0 && !currentArena._openEdges[(int)Orientation.North])
+                {
+                    currentArena._openEdges[(int)Orientation.North] = true;
+                    openCount++;
+                }
+            }
+        }
         bool[] open = currentArena._openEdges;
         switch (openCount)
         {
@@ -304,7 +339,25 @@ public class MapGenerator : MonoBehaviour
                 Debug.LogError("0 edges open");
                 break;
             case 1:
-                Debug.LogError("1 edge open");
+                if(open[(int) Orientation.West])
+                {
+                    currentArena._orientation = Orientation.West;
+                }
+                else
+                if (open[(int)Orientation.East])
+                {
+                    currentArena._orientation = Orientation.East;
+                }
+                else
+                if (open[(int)Orientation.North])
+                {
+                    currentArena._orientation = Orientation.North;
+                }
+                else
+                if (open[(int)Orientation.South])
+                {
+                    currentArena._orientation = Orientation.South;
+                }
                 break;
             case 2:
                 if(open[(int) Orientation.West])
@@ -533,6 +586,8 @@ public enum ArenaType
     T,
     Straight,
     Bend,
+    Start,
+    End,
     assigning,
     Unassigned
 }
