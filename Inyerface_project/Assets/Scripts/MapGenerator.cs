@@ -33,13 +33,15 @@ public class MapGenerator : MonoBehaviour
             for (int j = 0; j < map.GetLength(1); j++)
                 map[i, j] = new Arena();
 
-        System.Random rand;
-        if (useSeed)
+
+        if(!useSeed)
         {
-            rand = new System.Random(seed);
+            System.Random seedGenerator = new System.Random();
+            seed = seedGenerator.Next();
         }
-        else
-            rand = new System.Random();
+        System.Random rand = new System.Random(seed);
+
+        Debug.Log("Seed used: " + seed);
         if(GenerateMap(rand))        
             PopulateMap(rand);
     }
@@ -80,7 +82,7 @@ public class MapGenerator : MonoBehaviour
                         Debug.LogError("Orientation was unexpected when spawning tile");
                         break;
                 }
-                Debug.Log("Arena being spawned: " + currentArena._arenaType.ToString() +  " "  +currentArena._orientation.ToString());
+                //Debug.Log("Arena being spawned: " + currentArena._arenaType.ToString() +  " "  +currentArena._orientation.ToString());
                 GameObject spawn = getRandomArena(currentArena._arenaType, rand);
                 if (spawn != null)
                 {
@@ -183,10 +185,10 @@ public class MapGenerator : MonoBehaviour
             }
             
             ChooseTileType(currentTile, nextTile, rand);
-            Debug.Log("currentTile: " + currentTile.ToString() + " " + map[currentTile._x, currentTile._y]._arenaType.ToString() + " " + map[currentTile._x, currentTile._y]._orientation.ToString() + ", endTile: " + endTile.ToString());
+            //Debug.Log("currentTile: " + currentTile.ToString() + " " + map[currentTile._x, currentTile._y]._arenaType.ToString() + " " + map[currentTile._x, currentTile._y]._orientation.ToString() + ", endTile: " + endTile.ToString());
         }
 
-        Debug.Log("Finished critical path");
+        //Debug.Log("Finished critical path");
 
         foreach(Arena arena in map)
         {
@@ -294,7 +296,7 @@ public class MapGenerator : MonoBehaviour
                 nextArena._orientation = Orientation.South;
             }
 
-            Debug.Log("setting nextArena to end: " + nextArena._orientation.ToString());
+           // Debug.Log("setting nextArena to end: " + nextArena._orientation.ToString());
         }
 
         if (currentArena._startTile)
