@@ -107,6 +107,8 @@ GameObject:
   - component: {fileID: 8527863991981135025}
   - component: {fileID: 1841174150}
   - component: {fileID: 1841174151}
+  - component: {fileID: 3105759238548693421}
+  - component: {fileID: 3141053799362716957}
   m_Layer: 10
   m_Name: Zombie
   m_TagString: Untagged
@@ -205,6 +207,9 @@ MonoBehaviour:
   player: {fileID: 0}
   agent: {fileID: 1841174151}
   state: 0
+  wanderRadius: 0
+  wanderReachedRadius: 0.5
+  alertRadius: 25
 --- !u!195 &1841174151
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -227,6 +232,47 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &3105759238548693421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5247379905023439855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3acd8f21060b0cd40b3af1d2a685b6db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderMovementSpeed: 0
+  attackMovementSpeed: 0
+  baseHealth: 0
+  currentHealth: 0
+  pistolDamageModifier: 0.85
+  shotgunDamageModifier: 1
+  meleeDamageModifier: 0.5
+  pistolDamageOutput: 0
+  shotgunDamageOutput: 0
+  meleeDamageOutput: 85
+  basicDamageOutput: 50
+  damageBuff: 5
+  healthBuff: 5
+  dropRate: 0.1
+  XPAmount: 100
+--- !u!114 &3141053799362716957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5247379905023439855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba1adbe6f7345954c8a184f218621f4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IFF_channel: 1
+  aggroPriority: 1
 --- !u!1 &5926308115437594953
 GameObject:
   m_ObjectHideFlags: 0
