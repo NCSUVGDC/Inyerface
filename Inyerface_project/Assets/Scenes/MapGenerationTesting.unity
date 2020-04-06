@@ -243,42 +243,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   openWallWeight: 2
-  gridSize: 40
+  gridSize: 50
   startPoint: {fileID: 307438875}
   useSeed: 1
-  seed: 1111
+  seed: 11111
   hub_prefabs:
-  - prefab: {fileID: 8388243880211988860, guid: 1df8169213b8da84c8ed05d9ca54a2a0,
+  - prefab: {fileID: 7500036643707092092, guid: f9fddbc0ce4e04746a6a93d1b60c07fd,
       type: 3}
     weight: 48
-  - prefab: {fileID: 8388243880211988860, guid: 4149f2ceef72bad41963903ee55ed4d2,
-      type: 3}
-    weight: 32
   t_prefabs:
-  - prefab: {fileID: 845980907169857319, guid: 05963bb85234968429320acbdb660e5e, type: 3}
-    weight: 32
-  - prefab: {fileID: 845980907169857319, guid: 599b6ee1c9a372741aead9dcc1f07913, type: 3}
-    weight: 51
-  straight_prefabs:
-  - prefab: {fileID: 5856601099113819014, guid: 507861d7ea19e7a4aa0740f2025fa4cd,
+  - prefab: {fileID: 5562389540965790129, guid: c6856358bcf360348ba961a5b600e32d,
       type: 3}
+    weight: 32
+  - prefab: {fileID: 2838107687729921362, guid: d3d511c2c46e15f439a2e793f0c02553,
+      type: 3}
+    weight: 51
+  - prefab: {fileID: 8227938484118204415, guid: 94267c0ce35cba446bfc6ffd0fb6457c,
+      type: 3}
+    weight: 34
+  straight_prefabs:
+  - prefab: {fileID: 355096360493991235, guid: 5422bb2f069a7d84fa08b3fe3240a6cd, type: 3}
     weight: 30
-  - prefab: {fileID: 5856601099113819014, guid: 7ebd1e1cb2f29d14abc2cd107f679e6f,
+  - prefab: {fileID: 7641065865427099754, guid: 07c62838fa95e4a4faece40f61ec8680,
       type: 3}
     weight: 56
   bend_prefabs:
-  - prefab: {fileID: 4465785534488710367, guid: 5d41c311d7fbbb546b1dd3bdb8e0a90c,
+  - prefab: {fileID: 1148587647853780611, guid: 71f14ea910e934e4fbe4bfddc1046412,
       type: 3}
     weight: 33
-  - prefab: {fileID: 4465785534488710367, guid: dbc21e54eac8e0c45ae79ff2397403c2,
+  - prefab: {fileID: 2627400401151502879, guid: 8540eec6120c9764d8deced11206c15d,
       type: 3}
     weight: 56
   start_prefabs:
-  - prefab: {fileID: 8388243880211988860, guid: db75a66346f25ad4298a9c7c203fd2f5,
+  - prefab: {fileID: 5374943575662394720, guid: 55bcf13b3c18ed645a7fecdcce47cf92,
       type: 3}
     weight: 46
   end_prefabs:
-  - prefab: {fileID: 8388243880211988860, guid: 32fbab437fe86ec44b69e47410a95247,
+  - prefab: {fileID: 5640388276978817630, guid: 4bf04dfabb89c1f4aa4ec5aeea210a0a,
       type: 3}
     weight: 17
   paintCriticalPath: 1
