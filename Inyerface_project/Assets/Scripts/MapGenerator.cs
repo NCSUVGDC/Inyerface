@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField]
@@ -22,13 +22,15 @@ public class MapGenerator : MonoBehaviour
     public TileEntry[] start_prefabs;
     public TileEntry[] end_prefabs;
 
-
+    public NavMeshSurface surface;
 
     public bool paintCriticalPath = false;
     public Material critPathMaterial;
     // Start is called before the first frame update
     void Start()
     {
+        surface = FindObjectOfType<NavMeshSurface>();
+
         for (int i = 0; i < map.GetLength(0); i++)
             for (int j = 0; j < map.GetLength(1); j++)
                 map[i, j] = new Arena();
@@ -44,6 +46,10 @@ public class MapGenerator : MonoBehaviour
         Debug.Log("Seed used: " + seed);
         if(GenerateMap(rand))        
             PopulateMap(rand);
+
+        surface.BuildNavMesh();
+
+
     }
 
     private void PopulateMap(System.Random rand)

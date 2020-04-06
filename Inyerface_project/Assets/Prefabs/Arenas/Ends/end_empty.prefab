@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5640388275803087846}
   - component: {fileID: 5640388275803087847}
   - component: {fileID: 5640388275803087844}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Ground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 5640388276000173431}
   - component: {fileID: 5640388276000173428}
   - component: {fileID: 5640388276000173429}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -646,7 +646,7 @@ GameObject:
   - component: {fileID: 5640388276044342165}
   - component: {fileID: 5640388276044342162}
   - component: {fileID: 5640388276044342163}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -963,7 +963,7 @@ GameObject:
   - component: {fileID: 5640388276726131659}
   - component: {fileID: 5640388276726131656}
   - component: {fileID: 5640388276726131657}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1280,7 +1280,7 @@ GameObject:
   - component: {fileID: 5640388276753065466}
   - component: {fileID: 5640388276753065467}
   - component: {fileID: 5640388276753065464}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1597,7 +1597,7 @@ GameObject:
   - component: {fileID: 5640388276901758149}
   - component: {fileID: 5640388276901758146}
   - component: {fileID: 5640388276901758147}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1906,7 +1906,7 @@ GameObject:
   - component: {fileID: 5640388276978107911}
   - component: {fileID: 5640388276978107908}
   - component: {fileID: 5640388276978107909}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (12)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2254,7 +2254,7 @@ GameObject:
   - component: {fileID: 8938807160782652897}
   - component: {fileID: 8750749960539722034}
   - component: {fileID: 8604552681349961451}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
