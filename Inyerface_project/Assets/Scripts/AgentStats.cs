@@ -5,8 +5,8 @@ using UnityEngine;
 public class AgentStats : MonoBehaviour
 {
     [Header("Combat Stats")]
-    public float wanderMovementSpeed;
-    public float attackMovementSpeed;
+    public float wanderMovementSpeed = 4f;
+    public float attackMovementSpeed = 6f;
     public float baseHealth;
     [Tooltip("Don't set this manually")]
     [SerializeField]

@@ -12,14 +12,24 @@ public class ZombieController : MonoBehaviour
     [Tooltip("Agent enters attack mode if an enemy appears in this radius")]
     public float alertRadius = 25f;
     private GameObject targetEnemy;
+    public float attackRange = 10f;
+
+    public Collider attackInRangeDetector;
+    public Collider hitBox;
 
     private Vector3 wanderPosition;
     private bool wanderingToPosition = false;
     private IFFTag.IFF iff_channel;
+    private AgentStats stats;
+    private Animator anim;
+
     void Start()
     {
         player = FindObjectOfType<PlayerMovement>().gameObject;
         iff_channel = GetComponent<IFFTag>().IFF_channel;
+        stats = GetComponent<AgentStats>();
+        anim = GetComponent<Animator>();
+        anim.SetInteger("ZombieState", 0);
     }
 
 
@@ -30,13 +40,23 @@ public class ZombieController : MonoBehaviour
             case ZombieStates.Wander:
                 //search for someone to attack or a place to wander
                 Wander();
+                
                 break;
-            case ZombieStates.Attack:
-                agent.SetDestination(targetEnemy.transform.position);
+            case ZombieStates.Pursuit:
+                Pursuit();
+                
                 break;
             default:
                 break;
         }
+    }
+
+
+
+
+    private void Pursuit()
+    {
+        agent.SetDestination(targetEnemy.transform.position);
     }
 
     private void Wander()
@@ -66,7 +86,6 @@ public class ZombieController : MonoBehaviour
             {
                 //check if position has been reached
                 wanderPosition.y = transform.position.y;
-                Debug.Log("Transform: " + transform.position.ToString() + " wanderPos: " + wanderPosition.ToString() + " mag: " + Vector3.Distance(wanderPosition, transform.position).ToString());
                 if (Vector3.Distance(wanderPosition, transform.position) <= wanderReachedRadius)
                 {
                     wanderingToPosition = false;
@@ -80,20 +99,22 @@ public class ZombieController : MonoBehaviour
                 Debug.DrawRay(wanderPosition, Vector3.up * 10f, Color.blue, 10f);
                 wanderingToPosition = true;
                 agent.SetDestination(wanderPosition);
-                Debug.Log("Setting destination to: " + wanderPosition.ToString());
+                agent.speed = stats.wanderMovementSpeed;
             }
         }
         else
         {
             wanderingToPosition = false;
-            state = ZombieStates.Attack;
+            state = ZombieStates.Pursuit;
+            anim.SetInteger("ZombieState", (int)ZombieStates.Pursuit);
+            agent.speed = stats.attackMovementSpeed;
         }
     }
 
     public enum ZombieStates
     {
         Wander,
-        Attack
+        Pursuit
     }
     public Vector3 RandomNavmeshLocation(float radius)
     {
