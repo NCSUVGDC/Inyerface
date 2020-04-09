@@ -35,7 +35,7 @@ public class MinimapCamera : MonoBehaviour
             case CameraUIType.RearViewMirror:
                 newPosition.y += .629f; //height offset to place camera at head height
                 transform.position = newPosition;
-                transform.rotation = Quaternion.Euler(-playerCam.eulerAngles.x, player.eulerAngles.y + 180f, 0f);
+                transform.rotation = Quaternion.Euler(0f, player.eulerAngles.y + 180f, 0f);
                 break;
             default:
                 break;

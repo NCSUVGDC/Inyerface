@@ -42,6 +42,9 @@ public class PlayerStats : MonoBehaviour
     public const float meleeDamageOutput = 85f;
     public const float basicDamageOutput = 50f;
 
+
+    public List<HealthBar> healthBars = new List<HealthBar>();
+
     public void ApplyDamage(float damageAmount, DamageType damageType)
     {
         if (healthBarUnlocked)
@@ -64,6 +67,10 @@ public class PlayerStats : MonoBehaviour
             }
             Debug.Log("Taking " + damageAmount + " points of damage");
             currentHealth -= damageAmount;
+            foreach(HealthBar healthBar in healthBars)
+            {
+                healthBar.SetHealth(currentHealth);
+            }
             if (currentHealth <= 0f)
             {
                 Die();
@@ -105,6 +112,18 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        foreach(HealthBar healthBar in healthBars)
+        {
+            healthBar.SetHealth(currentHealth);
+        }
+    }
+
+    public void addHealthBar(HealthBar bar)
+    {
+        healthBars.Add(bar);
+        bar.SetHealth(currentHealth);
+        bar.SetMaxHealth(maxHealth);
+
     }
 
     public void addPistolAmmo(int ammo)
