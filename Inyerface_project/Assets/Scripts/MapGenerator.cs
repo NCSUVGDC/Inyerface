@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class MapGenerator : MonoBehaviour
 {
     [SerializeField]
     public Arena[,] map = new Arena[5,5];
+    public List<GameObject> mapObjects;
     public int openWallWeight = 1; //Ratio of open walls to closed walls when deciding if it should be open or close. Higher values give more open
 
     public float gridSize = 40f;
@@ -22,19 +23,30 @@ public class MapGenerator : MonoBehaviour
     public TileEntry[] start_prefabs;
     public TileEntry[] end_prefabs;
 
-
+    public NavMeshSurface surface;
 
     public bool paintCriticalPath = false;
     public Material critPathMaterial;
     // Start is called before the first frame update
-    void Start()
+
+
+    public void GenerateLevel()
     {
+        //delete previous map
+        map = new Arena[5, 5]; 
+        if(mapObjects != null)
+        {
+            foreach (GameObject tile in mapObjects)
+                GameObject.Destroy(tile);
+        }
+        surface = FindObjectOfType<NavMeshSurface>();
+
         for (int i = 0; i < map.GetLength(0); i++)
             for (int j = 0; j < map.GetLength(1); j++)
                 map[i, j] = new Arena();
 
 
-        if(!useSeed)
+        if (!useSeed)
         {
             System.Random seedGenerator = new System.Random();
             seed = seedGenerator.Next();
@@ -42,8 +54,10 @@ public class MapGenerator : MonoBehaviour
         System.Random rand = new System.Random(seed);
 
         Debug.Log("Seed used: " + seed);
-        if(GenerateMap(rand))        
+        if (GenerateMap(rand))
             PopulateMap(rand);
+
+        surface.BuildNavMesh();
     }
 
     private void PopulateMap(System.Random rand)
@@ -88,6 +102,7 @@ public class MapGenerator : MonoBehaviour
                 {
                     
                     spawn = Instantiate(spawn, spawnLoc, spawnRot);
+                    mapObjects.Add(spawn);
 
                     if(currentArena._criticalPath && paintCriticalPath && !currentArena._startTile && !currentArena._endTile)
                     {
