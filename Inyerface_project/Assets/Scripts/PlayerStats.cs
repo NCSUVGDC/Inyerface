@@ -45,6 +45,11 @@ public class PlayerStats : MonoBehaviour
 
     public List<HealthBar> healthBars = new List<HealthBar>();
 
+    private void Start()
+    {
+        GetComponent<PlayerMovement>().speed = movementSpeed;
+        DontDestroyOnLoad(this.gameObject);
+    }
     public void ApplyDamage(float damageAmount, DamageType damageType)
     {
         if (healthBarUnlocked)
@@ -116,14 +121,6 @@ public class PlayerStats : MonoBehaviour
         {
             healthBar.SetHealth(currentHealth);
         }
-    }
-
-    public void addHealthBar(HealthBar bar)
-    {
-        healthBars.Add(bar);
-        bar.SetHealth(currentHealth);
-        bar.SetMaxHealth(maxHealth);
-
     }
 
     public void addPistolAmmo(int ammo)

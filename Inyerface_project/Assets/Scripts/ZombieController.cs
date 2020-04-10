@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.AI;
 public class ZombieController : MonoBehaviour
 {
-    public GameObject player;
     public NavMeshAgent agent;
     public ZombieStates state = ZombieStates.Wander;
     public float wanderRadius;
@@ -25,7 +24,6 @@ public class ZombieController : MonoBehaviour
 
     void Start()
     {
-        player = FindObjectOfType<PlayerMovement>().gameObject;
         iff_channel = GetComponent<IFFTag>().IFF_channel;
         stats = GetComponent<AgentStats>();
         anim = GetComponent<Animator>();

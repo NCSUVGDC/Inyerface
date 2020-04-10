@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5203673103669410147}
   - component: {fileID: 5750622231644016388}
   - component: {fileID: 5263682103987617534}
+  - component: {fileID: 1289358387}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -101,7 +102,7 @@ MonoBehaviour:
   controller: {fileID: 5203673103669410148}
   speed: 12
   gravity: -19.62
-  jumpHeight: 3
+  jumpHeight: 1.5
   groundCheck: {fileID: 5203673103451819864}
   groundDistance: 0.4
   groundMask:
@@ -229,6 +230,50 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bb775c209149e949b628c02087fdd40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentHealth: 0
+  healthBarUnlocked: 0
+  currentStamina: 0
+  staminaBarUnlocked: 0
+  exp: 0
+  pistolAmmo: 0
+  shotgunAmmo: 0
+  maxPistolAmmo: 100
+  maxShotgunAmmo: 100
+  maxHealth: 0
+  movementSpeed: 8
+  sprintingSpeed: 0
+  maxStamina: 0
+  staminaDrainRate: 0
+  criticalHitRate: 0
+  pistolDamageModifier: 1
+  shotgunDamageModifier: 1
+  meleeDamageModifier: 1
+  healthBars: []
+--- !u!114 &1289358387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203673103669410151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01efe70ad7d007d4882f0ac55791b777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBarPrefab: {fileID: 785815082515416414, guid: decfe03c89a536740975c68f2897a04d,
+    type: 3}
+  LockedUIElements:
+  - {fileID: 5768493183195998884, guid: f97429be72d2fb64faf041449c9797c5, type: 3}
+  - {fileID: 1869182820985301165, guid: ea5fea5d994668b4aa3e866f57fbcadc, type: 3}
+  - {fileID: 1872799939832682612, guid: 5db598fd1c7458245bffd3863c6f3839, type: 3}
+  - {fileID: 7192026716137007849, guid: 5d1235b0fb467734bbadca133e028294, type: 3}
+  - {fileID: 2492646081476556462, guid: e3b69546076bc1f46b62cb61254be5a0, type: 3}
+  - {fileID: 2251467586672765455, guid: c938e1a4f178d5d4fad5d017a9130522, type: 3}
+  - {fileID: 3678587581050645719, guid: b602f9b5d47a809448a4d3206b273340, type: 3}
+  - {fileID: 8252145553708187517, guid: 8a89b32799619604a827282b8a788cbd, type: 3}
+  - {fileID: 7467919581670102342, guid: 5f2cde115230c124198f1e750084531e, type: 3}
+  UnlockedUIElements: []
 --- !u!1 &5203673105095264266
 GameObject:
   m_ObjectHideFlags: 0
