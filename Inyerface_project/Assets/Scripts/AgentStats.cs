@@ -35,6 +35,9 @@ public class AgentStats : MonoBehaviour
     [Tooltip("For every level the player clears, base health gets buffed by this percentage")]
     [Range(0f, 100f)]
     public float healthBuff = 5f;
+    [Tooltip("For every level the player clears, base attackSpeed gets buffed by this percentage")]
+    [Range(0f, 100f)]
+    public float attackSpeedBuff = 5f;
 
 
     [Header("Item Drops")]
@@ -59,10 +62,12 @@ public class AgentStats : MonoBehaviour
     public void Start()
     {
         gmRef = FindObjectOfType<GameManager>();
-        currentHealth = baseHealth + baseHealth * (healthBuff / 100f); //increase currentHealth by baseHealth and damage buff
-        pistolDamageOutput += (pistolDamageOutput * (damageBuff / 100f));
-        shotgunDamageOutput += (shotgunDamageOutput * (damageBuff / 100f));
-        meleeDamageOutput += (meleeDamageOutput * (damageBuff / 100f));
+        currentHealth += gmRef.LevelNumber * baseHealth * (healthBuff / 100f); //increase currentHealth by baseHealth and damage buff
+        pistolDamageOutput += (gmRef.LevelNumber * pistolDamageOutput * (damageBuff / 100f));
+        shotgunDamageOutput += (gmRef.LevelNumber * shotgunDamageOutput * (damageBuff / 100f));
+        meleeDamageOutput += (gmRef.LevelNumber * meleeDamageOutput * (damageBuff / 100f));
+        attackMovementSpeed += (gmRef.LevelNumber * attackMovementSpeed * (attackSpeedBuff / 100f));
+        Debug.Log("Attack movement speed: " + attackMovementSpeed);
     }
 
     public void ApplyDamage(float damageAmount, DamageType damageType)
@@ -154,10 +159,13 @@ public class AgentStats : MonoBehaviour
     }
 }
 
+[System.Serializable]
 public class ItemDrop
 {
-    public int weight;
+
     public GameObject itemDropPrefab;
+    [Range(0,100)]
+    public int weight;
 
 }
 

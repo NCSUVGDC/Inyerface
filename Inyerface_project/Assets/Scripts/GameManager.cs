@@ -11,12 +11,17 @@ public class GameManager : MonoBehaviour
     private MapGenerator mapGen;
     private GameObject player;
     private NavMeshSurface navMesh;
+    public bool generateLevel = true;
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
-        mapGen = FindObjectOfType<MapGenerator>();
-        mapGen.GenerateLevel();
-        FindObjectOfType<PlayerSpawn>().SpawnPlayer();
+        if (generateLevel)
+        {
+            mapGen = FindObjectOfType<MapGenerator>();
+            mapGen.GenerateLevel();
+            FindObjectOfType<PlayerSpawn>().SpawnPlayer();
+        }
+        foreach(GameObject go in GameObject.FindGameObjectsWithTag("EditorOnly")) Destroy(go);
 
     }
 

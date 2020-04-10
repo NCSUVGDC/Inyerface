@@ -16,7 +16,6 @@ public class PlayerSpawn : MonoBehaviour
         }
         else
         {
-            Debug.Log("Spawning "+ Player.name + " at: " + transform.position.ToString());
 
             CharacterController cc = Player.GetComponent<CharacterController>();
             cc.enabled = false;

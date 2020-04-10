@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 5750622231644016388}
   - component: {fileID: 5263682103987617534}
   - component: {fileID: 1289358387}
+  - component: {fileID: 4487234164008438239}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -100,7 +101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controller: {fileID: 5203673103669410148}
-  speed: 12
   gravity: -19.62
   jumpHeight: 1.5
   groundCheck: {fileID: 5203673103451819864}
@@ -119,7 +119,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2295022b0192a964ca6e994eedc34d1d, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -235,13 +235,13 @@ MonoBehaviour:
   currentStamina: 0
   staminaBarUnlocked: 0
   exp: 0
-  pistolAmmo: 0
-  shotgunAmmo: 0
+  pistolAmmo: 100
+  shotgunAmmo: 100
   maxPistolAmmo: 100
   maxShotgunAmmo: 100
   maxHealth: 0
   movementSpeed: 8
-  sprintingSpeed: 0
+  sprintingSpeed: 20
   maxStamina: 0
   staminaDrainRate: 0
   criticalHitRate: 0
@@ -249,6 +249,7 @@ MonoBehaviour:
   shotgunDamageModifier: 1
   meleeDamageModifier: 1
   healthBars: []
+  ammoCounter: {fileID: 0}
 --- !u!114 &1289358387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -273,7 +274,30 @@ MonoBehaviour:
   - {fileID: 3678587581050645719, guid: b602f9b5d47a809448a4d3206b273340, type: 3}
   - {fileID: 8252145553708187517, guid: 8a89b32799619604a827282b8a788cbd, type: 3}
   - {fileID: 7467919581670102342, guid: 5f2cde115230c124198f1e750084531e, type: 3}
+  - {fileID: 6650570873666839518, guid: e72bec0b79d60b94e89e58db24645a37, type: 3}
   UnlockedUIElements: []
+--- !u!114 &4487234164008438239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5203673103669410151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d41eb70b01d28345b65a31b69b14480, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  stats: {fileID: 5263682103987617534}
+  range: 100
+  fpsCam: {fileID: 5203673105356210763}
+  DamageType: 0
+  impactEffect: {fileID: 1296463761533184551, guid: c789937839e242e49830dcce36c77572,
+    type: 3}
+  pistolMagazineMax: 12
+  shotgunMagazineMax: 8
+  currentPistolMagazine: 0
+  currentShotgunMagazine: 0
 --- !u!1 &5203673105095264266
 GameObject:
   m_ObjectHideFlags: 0

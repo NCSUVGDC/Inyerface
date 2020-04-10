@@ -45,9 +45,11 @@ public class PlayerStats : MonoBehaviour
 
     public List<HealthBar> healthBars = new List<HealthBar>();
 
+    public AmmoCounter ammoCounter;
+
+
     private void Start()
     {
-        GetComponent<PlayerMovement>().speed = movementSpeed;
         DontDestroyOnLoad(this.gameObject);
     }
     public void ApplyDamage(float damageAmount, DamageType damageType)
@@ -130,6 +132,7 @@ public class PlayerStats : MonoBehaviour
         {
             pistolAmmo = maxPistolAmmo;
         }
+        
     }
     public void addShotgunAmmo(int ammo)
     {

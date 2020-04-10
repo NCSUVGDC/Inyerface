@@ -13,13 +13,15 @@ public class Pickup : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Picking up");
             Pickitup(other);
         }
     }
     void Pickitup(Collider player)
     {
-        Instantiate(pickupEffect, transform.position, transform.rotation).SetActive(true);
+        GameObject effectGO = Instantiate(pickupEffect, transform.position, transform.rotation);
+        effectGO.SetActive(true);
+        Destroy(effectGO, 3f);
+
         
         PlayerStats stats = player.GetComponent<PlayerStats>();
 
@@ -30,9 +32,11 @@ public class Pickup : MonoBehaviour
                 break;
             case PickupType.shotgunAmmo:
                 stats.addShotgunAmmo((int) quantity);
+                stats.ammoCounter?.SetStorageText(stats.shotgunAmmo);
                 break;
             case PickupType.pistolAmmo:
                 stats.addPistolAmmo((int)quantity);
+                stats.ammoCounter?.SetStorageText(stats.pistolAmmo);
                 break;
             case PickupType.unlockUI:
                 stats.GetComponent<UIUnlockManager>().UnlockAnElement();
