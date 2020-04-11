@@ -44,7 +44,7 @@ public class AgentStats : MonoBehaviour
     public ItemDrop[] possibleDrops;
     [Range(0, 100)]
     public int dropRate = 1;
-    public float XPAmount = 100f;
+    public int XPAmount = 100;
 
     private static System.Random rand = new System.Random();
 
@@ -62,12 +62,13 @@ public class AgentStats : MonoBehaviour
     public void Start()
     {
         gmRef = FindObjectOfType<GameManager>();
+        currentHealth = baseHealth;
         currentHealth += gmRef.LevelNumber * baseHealth * (healthBuff / 100f); //increase currentHealth by baseHealth and damage buff
         pistolDamageOutput += (gmRef.LevelNumber * pistolDamageOutput * (damageBuff / 100f));
         shotgunDamageOutput += (gmRef.LevelNumber * shotgunDamageOutput * (damageBuff / 100f));
         meleeDamageOutput += (gmRef.LevelNumber * meleeDamageOutput * (damageBuff / 100f));
         attackMovementSpeed += (gmRef.LevelNumber * attackMovementSpeed * (attackSpeedBuff / 100f));
-        Debug.Log("Attack movement speed: " + attackMovementSpeed);
+        Debug.Log("currentHealth: " + currentHealth + " Base health " + baseHealth);
     }
 
     public void ApplyDamage(float damageAmount, DamageType damageType, PlayerStats player)
@@ -91,6 +92,7 @@ public class AgentStats : MonoBehaviour
         }
 
         currentHealth -= damageAmount;
+        Debug.Log("Current Health: " + currentHealth + " damageAmount " + damageAmount);
         if(currentHealth <= 0f)
         {
             Die(player);
@@ -121,7 +123,7 @@ public class AgentStats : MonoBehaviour
         //this just gets random float
 
         if (player != null)
-            player.exp += XPAmount;
+            player.AddExp(XPAmount);
 
         int chance = rand.Next(101);
         if (chance <= dropRate)
@@ -131,7 +133,6 @@ public class AgentStats : MonoBehaviour
             GameObject drop = randomDrop();
             if (drop != null)
             {
-                Debug.Log("Dropping: " + drop.name + " at " + transform.position);
                 Instantiate(drop, transform.position,transform.rotation);
             }
         }

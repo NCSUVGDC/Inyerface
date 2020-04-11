@@ -35,6 +35,11 @@ public class GameManager : MonoBehaviour
     {
         LevelNumber++;
         ChooseRandomSkybox();
+        XPCounter xpCounter = FindObjectOfType<XPCounter>();
+        if(xpCounter!= null)
+        {
+            xpCounter.SetXPName();
+        }
         LevelCounter levelText = FindObjectOfType<LevelCounter>();
         if(levelText != null)
         {

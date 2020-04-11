@@ -249,7 +249,7 @@ MonoBehaviour:
   state: 0
   wanderRadius: 15
   wanderReachedRadius: 1
-  alertRadius: 10
+  alertRadius: 35
   attackRange: 15
   attackInRangeDetector: {fileID: 0}
   hitBox: {fileID: 0}

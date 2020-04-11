@@ -10,7 +10,7 @@ public class ZombieController : MonoBehaviour
     public float wanderReachedRadius = .5f;
     [Tooltip("Agent enters attack mode if an enemy appears in this radius")]
     public float alertRadius = 25f;
-    private GameObject targetEnemy;
+    public GameObject targetEnemy;
     public float attackRange = 10f;
 
     public Collider attackInRangeDetector;
@@ -107,6 +107,15 @@ public class ZombieController : MonoBehaviour
             anim.SetInteger("ZombieState", (int)ZombieStates.Pursuit);
             agent.speed = stats.attackMovementSpeed;
         }
+    }
+
+    public void Alert(GameObject alerter)
+    {
+        targetEnemy = alerter;
+        state = ZombieController.ZombieStates.Pursuit;
+        wanderingToPosition = false;
+        anim.SetInteger("ZombieState", (int)ZombieStates.Pursuit);
+        agent.speed = stats.attackMovementSpeed;
     }
 
     public enum ZombieStates

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     public PlayerStats stats;
-    public float range;
+    
 
     public Camera fpsCam;
 
@@ -21,7 +21,13 @@ public class Gun : MonoBehaviour
     public int currentPistolMagazine;
     public int currentShotgunMagazine;
 
-
+    [Header("Gun stats")]
+    public int shotgunPellets = 10;
+    public float shotgunRange = 20;
+    public float shotgunVariance;
+    public float pistolRange;
+    public float shotgunNoiseRange;
+    public float pistolNoiseRange;
 
     private void Start()
     {
@@ -52,39 +58,90 @@ public class Gun : MonoBehaviour
 
     void Shoot()
     {
+        
+
+
         RaycastHit hit;
         if (DamageType == AgentStats.DamageType.pistol)
         {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, pistolNoiseRange);
+
+            foreach (Collider col in hitColliders)
+            {
+                ZombieController enemy = col.GetComponent<ZombieController>();
+                if (enemy != null)
+                {
+                    enemy.Alert(this.gameObject);
+                }
+            }
+
             if (currentPistolMagazine <= 0)
                 return;
 
             currentPistolMagazine--;
             stats.ammoCounter?.SetAmmoCounter(currentPistolMagazine, stats.pistolAmmo);
+
+
+            if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, pistolRange, layerMask))
+            {
+                AgentStats enemyStat = hit.transform.GetComponentInParent<AgentStats>();
+                if (enemyStat != null)
+                {
+                    enemyStat.ApplyDamage(stats.GetDamageValue(DamageType), DamageType, stats);
+                }
+
+                GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(impactGO, 2.5f);
+            }
+
         }
         else
         if(DamageType == AgentStats.DamageType.shotgun)
         {
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, shotgunNoiseRange);
+
+            foreach(Collider col in hitColliders)
+            {
+                ZombieController enemy = col.GetComponent<ZombieController>();
+                if (enemy != null)
+                {
+                    enemy.Alert(this.gameObject);
+                }
+            }
+
             if (currentShotgunMagazine <= 0)
                 return;
             currentShotgunMagazine--;
             stats.ammoCounter?.SetAmmoCounter(currentShotgunMagazine, stats.shotgunAmmo);
+            RaycastHit shotHit;
+
+            for(int i = 0; i < shotgunPellets; i++)
+            {
+                var v3Offset = transform.up * Random.Range(0.0f, shotgunVariance);
+                v3Offset = Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), transform.forward) * v3Offset;
+                Vector3 v3Hit = fpsCam.transform.forward * shotgunRange + v3Offset;
+
+
+                if (Physics.Raycast(fpsCam.transform.position, v3Hit, out shotHit))
+                {
+                    AgentStats enemyStat = shotHit.transform.GetComponentInParent<AgentStats>();
+                    if (enemyStat != null)
+                    {
+                        Debug.Log("Damage output: " + stats.GetDamageValue(DamageType));
+                        enemyStat.ApplyDamage(stats.GetDamageValue(DamageType), DamageType, stats);
+                    }
+                }
+
+                GameObject impactGO = Instantiate(impactEffect, shotHit.point, Quaternion.LookRotation(shotHit.normal));
+                Destroy(impactGO, 2.5f);
+            }
         }
         else
         {
             return;
         }
         
-        if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
-        {
-            AgentStats enemyStat = hit.transform.GetComponentInParent<AgentStats>();
-            if (enemyStat != null)
-            {
-                enemyStat.ApplyDamage(stats.GetDamageValue(DamageType), DamageType);
-            }
 
-            GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
-            Destroy(impactGO, 2.5f);
-        }
     }
     private void ReloadWeapon()
     {
@@ -131,21 +188,43 @@ public class Gun : MonoBehaviour
 
                 break;
             case AgentStats.DamageType.shotgun:
-                if (currentShotgunMagazine <= 0)
+                if (currentShotgunMagazine < shotgunMagazineMax)
                 {
-                    currentShotgunMagazine = shotgunMagazineMax;
+                    bool oneInTheChamber = false;
+                    if (currentShotgunMagazine > 0)
+                    {
+                        oneInTheChamber = true;
+                    }
+                    if (stats.shotgunAmmo <= 0)
+                    {
+                        //No bullets to reload
+                        Debug.Log("Out of ammo");
+                    }
+                    else
+                    if (stats.shotgunAmmo < shotgunMagazineMax)
+                    {
+                        currentShotgunMagazine = stats.shotgunAmmo;
+                        stats.shotgunAmmo = 0;
+                    }
+                    if (stats.shotgunAmmo >= shotgunMagazineMax)
+                    {
+                        stats.shotgunAmmo -= shotgunMagazineMax - currentShotgunMagazine;
+                        currentShotgunMagazine = shotgunMagazineMax;
+
+                    }
+
+                    if (oneInTheChamber)
+                    {
+                        currentShotgunMagazine++;
+                    }
+
+                    stats.ammoCounter?.SetAmmoCounter(currentShotgunMagazine, stats.shotgunAmmo);
                 }
                 else
                 if (currentShotgunMagazine >= shotgunMagazineMax)
                 {
                     //don't reload
                 }
-                else
-                {
-                    //have a bullet in the chamber
-                    currentShotgunMagazine = shotgunMagazineMax + 1;
-                }
-                stats.ammoCounter?.SetAmmoCounter(currentShotgunMagazine, stats.shotgunAmmo);
                 break;
             default:
                 break;

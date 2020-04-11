@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5203673103451819864}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,7 +46,7 @@ GameObject:
   - component: {fileID: 5263682103987617534}
   - component: {fileID: 1289358387}
   - component: {fileID: 4487234164008438239}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -236,7 +236,7 @@ MonoBehaviour:
   staminaBarUnlocked: 0
   exp: 0
   pistolAmmo: 100
-  shotgunAmmo: 100
+  shotgunAmmo: 30
   maxPistolAmmo: 100
   maxShotgunAmmo: 100
   maxHealth: 0
@@ -248,8 +248,13 @@ MonoBehaviour:
   pistolDamageModifier: 1
   shotgunDamageModifier: 1
   meleeDamageModifier: 1
+  pistolDamageOutput: 50
+  shotgunDamageOutput: 15
+  meleeDamageOutput: 85
+  basicDamageOutput: 50
   healthBars: []
   ammoCounter: {fileID: 0}
+  XPCounter: {fileID: 0}
 --- !u!114 &1289358387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,6 +280,7 @@ MonoBehaviour:
   - {fileID: 8252145553708187517, guid: 8a89b32799619604a827282b8a788cbd, type: 3}
   - {fileID: 7467919581670102342, guid: 5f2cde115230c124198f1e750084531e, type: 3}
   - {fileID: 6650570873666839518, guid: e72bec0b79d60b94e89e58db24645a37, type: 3}
+  - {fileID: 9053198090925090950, guid: b2da650ac92760a4eb6d6cb5e4e4088a, type: 3}
   UnlockedUIElements: []
 --- !u!114 &4487234164008438239
 MonoBehaviour:
@@ -289,7 +295,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stats: {fileID: 5263682103987617534}
-  range: 100
   fpsCam: {fileID: 5203673105356210763}
   DamageType: 0
   impactEffect: {fileID: 1296463761533184551, guid: c789937839e242e49830dcce36c77572,
@@ -298,6 +303,10 @@ MonoBehaviour:
   shotgunMagazineMax: 8
   currentPistolMagazine: 0
   currentShotgunMagazine: 0
+  shotgunPellets: 10
+  shotgunRange: 25
+  shotgunVariance: 10
+  pistolRange: 1000
 --- !u!1 &5203673105095264266
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +319,7 @@ GameObject:
   - component: {fileID: 5203673105095264262}
   - component: {fileID: 5203673105095264265}
   - component: {fileID: 5203673105095264264}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Capsule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,7 +412,7 @@ GameObject:
   - component: {fileID: 5203673105356210763}
   - component: {fileID: 5203673105356210762}
   - component: {fileID: 5203673105356210761}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
