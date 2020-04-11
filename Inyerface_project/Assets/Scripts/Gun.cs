@@ -77,8 +77,10 @@ public class Gun : MonoBehaviour
         if (Physics.Raycast(fpsCam.transform.position, fpsCam.transform.forward, out hit, range, layerMask))
         {
             AgentStats enemyStat = hit.transform.GetComponentInParent<AgentStats>();
-            if(enemyStat != null)
+            if (enemyStat != null)
+            {
                 enemyStat.ApplyDamage(stats.GetDamageValue(DamageType), DamageType);
+            }
 
             GameObject impactGO = Instantiate(impactEffect, hit.point, Quaternion.LookRotation(hit.normal));
             Destroy(impactGO, 2.5f);

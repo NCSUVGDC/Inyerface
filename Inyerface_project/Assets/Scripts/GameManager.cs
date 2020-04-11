@@ -12,11 +12,17 @@ public class GameManager : MonoBehaviour
     private GameObject player;
     private NavMeshSurface navMesh;
     public bool generateLevel = true;
+
+    private System.Random rand = new System.Random();
+
+    public Material[] skyBoxes;
+
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
         if (generateLevel)
         {
+            ChooseRandomSkybox();
             mapGen = FindObjectOfType<MapGenerator>();
             mapGen.GenerateLevel();
             FindObjectOfType<PlayerSpawn>().SpawnPlayer();
@@ -28,6 +34,7 @@ public class GameManager : MonoBehaviour
     public void StartNextLevel()
     {
         LevelNumber++;
+        ChooseRandomSkybox();
         LevelCounter levelText = FindObjectOfType<LevelCounter>();
         if(levelText != null)
         {
@@ -44,5 +51,11 @@ public class GameManager : MonoBehaviour
         yield return 0;
 
         FindObjectOfType<NavMeshSurface>().BuildNavMesh();
+    }
+
+    private void ChooseRandomSkybox()
+    {
+        int result = rand.Next(skyBoxes.Length);
+        RenderSettings.skybox = skyBoxes[result];
     }
 }

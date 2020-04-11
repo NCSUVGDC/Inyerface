@@ -42,8 +42,8 @@ public class AgentStats : MonoBehaviour
 
     [Header("Item Drops")]
     public ItemDrop[] possibleDrops;
-    [Range(0.0f, 1.0f)]
-    public float dropRate = .1f;
+    [Range(0, 100)]
+    public int dropRate = 1;
     public float XPAmount = 100f;
 
     private static System.Random rand = new System.Random();
@@ -70,8 +70,9 @@ public class AgentStats : MonoBehaviour
         Debug.Log("Attack movement speed: " + attackMovementSpeed);
     }
 
-    public void ApplyDamage(float damageAmount, DamageType damageType)
+    public void ApplyDamage(float damageAmount, DamageType damageType, PlayerStats player)
     {
+        
         switch (damageType)
         {
             case DamageType.pistol:
@@ -92,7 +93,7 @@ public class AgentStats : MonoBehaviour
         currentHealth -= damageAmount;
         if(currentHealth <= 0f)
         {
-            Die();
+            Die(player);
         }
     }
 
@@ -114,20 +115,24 @@ public class AgentStats : MonoBehaviour
         }
     }
 
-    public void Die()
+    public void Die(PlayerStats player)
     {
         //Decide to drop
         //this just gets random float
-        double sample = rand.NextDouble();
-        float chance = (float)sample % 1f;
 
+        if (player != null)
+            player.exp += XPAmount;
+
+        int chance = rand.Next(101);
         if (chance <= dropRate)
         {
+            
             //Decide what to drop
             GameObject drop = randomDrop();
             if (drop != null)
             {
-                Instantiate(drop, this.transform);
+                Debug.Log("Dropping: " + drop.name + " at " + transform.position);
+                Instantiate(drop, transform.position,transform.rotation);
             }
         }
 

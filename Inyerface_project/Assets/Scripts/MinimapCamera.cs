@@ -8,13 +8,13 @@ public class MinimapCamera : MonoBehaviour
     public bool followRotation;
     public CameraUIType cameraUIType;
 
-    private Transform playerCam;
 
     private void Start()
     {
         player = FindObjectOfType<PlayerMovement>().transform;
-        playerCam = player.gameObject.GetComponentInChildren<Camera>().transform;
-        this.transform.rotation = Quaternion.Euler(90, 180, 0);
+        // this.transform.rotation = Quaternion.Euler(90, 180, 0);
+        DontDestroyOnLoad(gameObject);
+        transform.SetParent(null);
     }
 
     private void LateUpdate()
