@@ -32,11 +32,13 @@ public class Pickup : MonoBehaviour
                 break;
             case PickupType.shotgunAmmo:
                 stats.addShotgunAmmo((int) quantity);
-                stats.ammoCounter?.SetStorageText(stats.shotgunAmmo);
+                if(stats.GetComponent<Gun>().DamageType == AgentStats.DamageType.shotgun)
+                    stats.ammoCounter?.SetStorageText(stats.shotgunAmmo);
                 break;
             case PickupType.pistolAmmo:
                 stats.addPistolAmmo((int)quantity);
-                stats.ammoCounter?.SetStorageText(stats.pistolAmmo);
+                if (stats.GetComponent<Gun>().DamageType == AgentStats.DamageType.pistol)
+                    stats.ammoCounter?.SetStorageText(stats.pistolAmmo);
                 break;
             case PickupType.unlockUI:
                 stats.GetComponent<UIUnlockManager>().UnlockAnElement();

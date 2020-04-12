@@ -48,6 +48,7 @@ public class AgentStats : MonoBehaviour
 
     private static System.Random rand = new System.Random();
 
+    public bool died = false;
 
     public enum DamageType
     {
@@ -68,7 +69,6 @@ public class AgentStats : MonoBehaviour
         shotgunDamageOutput += (gmRef.LevelNumber * shotgunDamageOutput * (damageBuff / 100f));
         meleeDamageOutput += (gmRef.LevelNumber * meleeDamageOutput * (damageBuff / 100f));
         attackMovementSpeed += (gmRef.LevelNumber * attackMovementSpeed * (attackSpeedBuff / 100f));
-        Debug.Log("currentHealth: " + currentHealth + " Base health " + baseHealth);
     }
 
     public void ApplyDamage(float damageAmount, DamageType damageType, PlayerStats player)
@@ -92,7 +92,7 @@ public class AgentStats : MonoBehaviour
         }
 
         currentHealth -= damageAmount;
-        Debug.Log("Current Health: " + currentHealth + " damageAmount " + damageAmount);
+
         if(currentHealth <= 0f)
         {
             Die(player);
@@ -121,6 +121,8 @@ public class AgentStats : MonoBehaviour
     {
         //Decide to drop
         //this just gets random float
+        if (died)
+            return;
 
         if (player != null)
             player.AddExp(XPAmount);
@@ -138,6 +140,7 @@ public class AgentStats : MonoBehaviour
         }
 
         GameObject.Destroy(gameObject);
+        died = true;
     }
 
     private GameObject randomDrop()

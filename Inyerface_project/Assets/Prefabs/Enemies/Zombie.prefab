@@ -216,7 +216,7 @@ MonoBehaviour:
   meleeDamageModifier: 0.5
   pistolDamageOutput: 0
   shotgunDamageOutput: 0
-  meleeDamageOutput: 25
+  meleeDamageOutput: 10
   basicDamageOutput: 50
   damageBuff: 10
   healthBuff: 10
@@ -233,6 +233,7 @@ MonoBehaviour:
     weight: 50
   dropRate: 45
   XPAmount: 100
+  died: 0
 --- !u!114 &1841174150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,6 +251,7 @@ MonoBehaviour:
   wanderRadius: 15
   wanderReachedRadius: 1
   alertRadius: 35
+  targetEnemy: {fileID: 0}
   attackRange: 15
   attackInRangeDetector: {fileID: 0}
   hitBox: {fileID: 0}

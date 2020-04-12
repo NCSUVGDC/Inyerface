@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(this.gameObject);
+        Cursor.visible = false;
         if (generateLevel)
         {
             ChooseRandomSkybox();
@@ -45,6 +46,12 @@ public class GameManager : MonoBehaviour
         {
             levelText.SetLevelCounter(LevelNumber);
         }
+        Pickup[] pickups = FindObjectsOfType<Pickup>();
+        foreach(Pickup pick in pickups)
+        {
+            Destroy(pick.gameObject);
+        }
+
         mapGen.GenerateLevel();
         FindObjectOfType<PlayerSpawn>().SpawnPlayer();
         StartCoroutine(UpdateNavMesh());
