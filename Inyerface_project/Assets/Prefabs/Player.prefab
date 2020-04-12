@@ -328,6 +328,7 @@ MonoBehaviour:
   pistolAnimations: {fileID: 8806476841483246837}
   shotgunModel: {fileID: 8428870675476117866}
   pistolModel: {fileID: 6406670355521312000}
+  audio: {fileID: 0}
   pistolADSPos: {x: 0, y: -0.031, z: 0.259}
   pistolADSRot: {x: 0, y: 180, z: 0}
   pistolHipPos: {x: 0.258998, y: -0.163, z: 0.542}
@@ -716,6 +717,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: 0dd1dbc9bfbdc1f44ab038adad5c635f, type: 2}
+    - target: {fileID: 2143733185746523709, guid: 57c4197552e2d7a428930a972d099f90,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f2f4459f2f17a69478195c92c3463766, type: 2}
     - target: {fileID: 2166851963537618443, guid: 57c4197552e2d7a428930a972d099f90,
         type: 3}
       propertyPath: m_Layer
@@ -958,6 +964,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 794272430299331101, guid: fbea1d91c63c8174c90a954e484d25e7,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0a275d2715980bb44a872db24f283c8b, type: 2}
     - target: {fileID: 2329595035509725767, guid: fbea1d91c63c8174c90a954e484d25e7,
         type: 3}
       propertyPath: m_Layer

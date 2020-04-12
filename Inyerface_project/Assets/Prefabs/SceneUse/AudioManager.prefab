@@ -1,0 +1,112 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2185825158433587764
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2185825158433590730}
+  - component: {fileID: 2185825158433590731}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2185825158433590730
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185825158433587764}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 213.97493, y: -419.53375, z: -530.3401}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2185825158433590731
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2185825158433587764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b8836ccce7e199448e779719614b4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: PistolShot
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.792
+    pitch: 1
+    looping: 0
+    source: {fileID: 0}
+  - name: ShotgunShot
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.971
+    pitch: 0.35
+    looping: 0
+    source: {fileID: 0}
+  - name: ShellIn
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.222
+    pitch: 2.4
+    looping: 0
+    source: {fileID: 0}
+  - name: ShotgunBreakAction
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.259
+    pitch: 0.62
+    looping: 0
+    source: {fileID: 0}
+  - name: CloseBreach
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.279
+    pitch: 0.74
+    looping: 0
+    source: {fileID: 0}
+  - name: PistolMagRelease
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.287
+    pitch: 2.6
+    looping: 0
+    source: {fileID: 0}
+  - name: PistolMagInserted
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.279
+    pitch: 0.72
+    looping: 0
+    source: {fileID: 0}
+  - name: PistolSlidePulledBack
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.259
+    pitch: 1.8
+    looping: 0
+    source: {fileID: 0}
+  - name: PistolSlideForward
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.283
+    pitch: 1.72
+    looping: 0
+    source: {fileID: 0}
+  - name: PistolSlideFiredBack
+    clip: {fileID: 8300000, guid: 3a2d07bcf795d9747bbfe991df89c29b, type: 3}
+    volume: 0.34
+    pitch: 1.51
+    looping: 0
+    source: {fileID: 0}
+  - name: Theme
+    clip: {fileID: 8300000, guid: df466b67ce6c2534e83633ff7034d399, type: 3}
+    volume: 0.08
+    pitch: 1.51
+    looping: 1
+    source: {fileID: 0}

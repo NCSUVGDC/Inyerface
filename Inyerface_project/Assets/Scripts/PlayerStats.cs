@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using static AgentStats;
-
+using UnityEngine.SceneManagement;
 public class PlayerStats : MonoBehaviour
 {
     [Header("Status")]
@@ -118,7 +118,8 @@ public class PlayerStats : MonoBehaviour
     }
     public void Die()
     {
-        Debug.Log("You Died");   
+        Debug.Log("You Died");
+        SceneManager.LoadScene("DeathScene");
     }
 
     public void addHealth(float heal)
