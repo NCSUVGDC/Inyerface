@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2728958418747620266}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone_cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 2728958418747628682}
   - component: {fileID: 2728958418750939716}
   - component: {fileID: 2728958418749934860}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: box_cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -120,7 +120,7 @@ GameObject:
   - component: {fileID: 2728958418747627806}
   - component: {fileID: 2728958418751036578}
   - component: {fileID: 2728958418749903380}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: box_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 6126705870125340260}
   - component: {fileID: 41452542}
   - component: {fileID: 41452538}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: HealthPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 6162132652475295569}
   - component: {fileID: 6162132652468848631}
   - component: {fileID: 6162132652470840723}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fireball
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 6162132652480824579}
   - component: {fileID: 6162132652462454103}
   - component: {fileID: 6162132652460781233}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Spark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5130,7 +5130,7 @@ GameObject:
   - component: {fileID: 6162132652480819209}
   - component: {fileID: 6162132652462458123}
   - component: {fileID: 6162132652460783425}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Blast
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9941,7 +9941,7 @@ GameObject:
   - component: {fileID: 6162132652480829185}
   - component: {fileID: 6162132652462555981}
   - component: {fileID: 6162132652460756107}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bloompar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14676,7 +14676,7 @@ GameObject:
   - component: {fileID: 6162132652480813719}
   - component: {fileID: 6162132652462561451}
   - component: {fileID: 6162132652460754095}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fiery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19430,7 +19430,7 @@ GameObject:
   - component: {fileID: 6162132652480905231}
   - component: {fileID: 6162132652462455571}
   - component: {fileID: 6162132652460753313}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Smoke
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24156,7 +24156,7 @@ GameObject:
   - component: {fileID: 6162132652480795915}
   - component: {fileID: 6162132652462463351}
   - component: {fileID: 6162132652460842871}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FireballExplode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -28976,7 +28976,7 @@ GameObject:
   - component: {fileID: 6162132652480792625}
   - component: {fileID: 6162132652462502261}
   - component: {fileID: 6162132652460841467}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fiery
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -33711,7 +33711,7 @@ GameObject:
   - component: {fileID: 6162132652480804203}
   - component: {fileID: 6162132652462471617}
   - component: {fileID: 6162132652460774323}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bloom
   m_TagString: Untagged
   m_Icon: {fileID: 0}

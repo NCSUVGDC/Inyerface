@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
             FindObjectOfType<PlayerSpawn>().SpawnPlayer();
         }
         foreach(GameObject go in GameObject.FindGameObjectsWithTag("EditorOnly")) Destroy(go);
-
+        FindObjectOfType<AudioManager>().Play("Theme");
     }
 
     public void StartNextLevel()

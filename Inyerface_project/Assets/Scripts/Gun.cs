@@ -35,6 +35,9 @@ public class Gun : MonoBehaviour
     public GameObject shotgunModel;
     public GameObject pistolModel;
 
+    [HideInInspector]
+    public AudioManager audio;
+
     public Vector3 pistolADSPos;
     public Vector3 pistolADSRot;
     public Vector3 pistolHipPos;
@@ -53,12 +56,15 @@ public class Gun : MonoBehaviour
     public Transform pistolTransform;
     public Transform shotgunTransform;
 
+    
+
     private void Start()
     {
         layerMask = LayerMask.GetMask("NonShootable");
         layerMask = ~layerMask;
         currentPistolMagazine = pistolMagazineMax;
         currentShotgunMagazine = shotgunMagazineMax;
+        audio = FindObjectOfType<AudioManager>();
     }
     // Update is called once per frame
     void Update()
@@ -139,6 +145,7 @@ public class Gun : MonoBehaviour
             if (currentPistolMagazine <= 0)
                 return;
 
+            audio.Play("PistolShot");
             currentPistolMagazine--;
             pistolAnimations.anim.SetInteger("RoundsLoaded", currentPistolMagazine);
             pistolAnimations.anim.SetTrigger("Fire");
@@ -188,8 +195,7 @@ public class Gun : MonoBehaviour
             //Start shooting animation
             shotgunAnimations.anim.SetInteger("RoundsLoaded", currentShotgunMagazine);
             shotgunAnimations.anim.SetTrigger("Fire");
-
-
+            audio.Play("ShotgunShot");
             currentShotgunMagazine--;
             stats.ammoCounter?.SetAmmoCounter(currentShotgunMagazine, stats.shotgunAmmo);
             RaycastHit shotHit;

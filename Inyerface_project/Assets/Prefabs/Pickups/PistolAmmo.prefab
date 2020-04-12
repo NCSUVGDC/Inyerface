@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1171200376589731208}
   - component: {fileID: 1171200376588392444}
   - component: {fileID: 1171200376587394670}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: box_cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 1171200376589648204}
   - component: {fileID: 1171200376588370676}
   - component: {fileID: 1171200376587436848}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: box_body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -169,7 +169,7 @@ GameObject:
   - component: {fileID: 1171200377790284295}
   - component: {fileID: 3028906080663324514}
   - component: {fileID: 1401202963118754144}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PistolAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1171200376589729726}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Bone_cap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,6 +289,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1171200376589726476}
     m_Modifications:
+    - target: {fileID: 118864, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 119956, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 152120, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 176510, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 176940, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 179432, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
       propertyPath: m_Name
       value: Fireball
@@ -296,6 +316,22 @@ PrefabInstance:
     - target: {fileID: 179432, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 179432, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 183770, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 191522, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 191906, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 493306, guid: 965716b1b5cefa948bbf456c7b433186, type: 3}
       propertyPath: m_LocalPosition.x

@@ -7,12 +7,15 @@ using UnityEngine;
 public class ShotgunAnimations : MonoBehaviour
 {
     public Animator anim;
+    private AudioManager audio;
 
     public bool shooting;
     public bool reloading;
 
-
-
+    private void Start()
+    {
+        audio = FindObjectOfType<AudioManager>();        
+    }
     public void SetShooting(int isShooting)
     {
         shooting = isShooting > 0;
@@ -22,4 +25,9 @@ public class ShotgunAnimations : MonoBehaviour
         reloading = isReloading > 0;
     }
     
+    public void PlaySound(string soundName)
+    {
+        audio.Play(soundName);
+    }
+
 }
