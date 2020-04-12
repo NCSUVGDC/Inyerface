@@ -58,7 +58,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e11d5ac98dd2d8a4db6eb854d0b52c51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -160,7 +160,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e11d5ac98dd2d8a4db6eb854d0b52c51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -216,10 +216,10 @@ MonoBehaviour:
   meleeDamageModifier: 0.5
   pistolDamageOutput: 0
   shotgunDamageOutput: 0
-  meleeDamageOutput: 25
+  meleeDamageOutput: 10
   basicDamageOutput: 50
-  damageBuff: 25
-  healthBuff: 25
+  damageBuff: 10
+  healthBuff: 10
   attackSpeedBuff: 10
   possibleDrops:
   - itemDropPrefab: {fileID: 2728958418747897128, guid: 9b3e67696de05b34b89918ba6d148b70,
@@ -231,8 +231,9 @@ MonoBehaviour:
   - itemDropPrefab: {fileID: 7011262416497576525, guid: c4f6ed41ec9365c4cac4413821be4063,
       type: 3}
     weight: 50
-  dropRate: 0.45
+  dropRate: 45
   XPAmount: 100
+  died: 0
 --- !u!114 &1841174150
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,7 +250,8 @@ MonoBehaviour:
   state: 0
   wanderRadius: 15
   wanderReachedRadius: 1
-  alertRadius: 10
+  alertRadius: 35
+  targetEnemy: {fileID: 0}
   attackRange: 15
   attackInRangeDetector: {fileID: 0}
   hitBox: {fileID: 0}
@@ -480,7 +482,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: e11d5ac98dd2d8a4db6eb854d0b52c51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

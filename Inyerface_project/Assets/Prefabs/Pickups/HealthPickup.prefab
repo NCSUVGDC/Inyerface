@@ -196,7 +196,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2728958418747546936}
-  - component: {fileID: 2728958418757295882}
   - component: {fileID: 3660325607654168069}
   - component: {fileID: 6126705870125340260}
   - component: {fileID: 41452542}
@@ -225,25 +224,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2728958418757295882
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2728958418747897128}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 3fe47bcef97348f4e8fbc0553a357aeb, type: 3}
-  m_Controller: {fileID: 9100000, guid: 755db8c220f0dab418ccd01dbdc3057d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3660325607654168069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -271,8 +251,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.63002205, y: 1.205427, z: 1}
-  m_Center: {x: 0.0069055557, y: 0.5900995, z: 0}
+  m_Size: {x: 0.63002205, y: 1.9667155, z: 1}
+  m_Center: {x: 0.0069055557, y: 0.20945531, z: 0}
 --- !u!54 &41452542
 Rigidbody:
   m_ObjectHideFlags: 0

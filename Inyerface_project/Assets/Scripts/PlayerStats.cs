@@ -10,7 +10,7 @@ public class PlayerStats : MonoBehaviour
     public bool healthBarUnlocked = false;
     public float currentStamina;
     public bool staminaBarUnlocked = false;
-    public float exp;
+    public int exp;
 
 
     [Header("Inventory")]
@@ -37,15 +37,17 @@ public class PlayerStats : MonoBehaviour
     public float meleeDamageModifier = 1.0f;
 
     [Header("Damage Output")]
-    public const float pistolDamageOutput = 50f;
-    public const float shotgunDamageOutput = 75f;
-    public const float meleeDamageOutput = 85f;
-    public const float basicDamageOutput = 50f;
+    public float pistolDamageOutput = 50f;
+    [Tooltip("This is per pellet, so total damage will be pellet damage * amount of pellets")]
+    public float shotgunDamageOutput = 75f;
+    public float meleeDamageOutput = 85f;
+    public float basicDamageOutput = 50f;
 
 
     public List<HealthBar> healthBars = new List<HealthBar>();
 
     public AmmoCounter ammoCounter;
+    public XPCounter XPCounter;
 
 
     private void Start()
@@ -107,6 +109,13 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
+    public void AddExp(int newExp)
+    {
+        exp += newExp;
+        if (XPCounter != null)
+            XPCounter.SetXPCounter(exp);
+        
+    }
     public void Die()
     {
         Debug.Log("You Died");   
@@ -143,3 +152,4 @@ public class PlayerStats : MonoBehaviour
         }
     }
 }
+

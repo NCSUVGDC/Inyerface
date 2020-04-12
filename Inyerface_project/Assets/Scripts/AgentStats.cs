@@ -42,12 +42,13 @@ public class AgentStats : MonoBehaviour
 
     [Header("Item Drops")]
     public ItemDrop[] possibleDrops;
-    [Range(0.0f, 1.0f)]
-    public float dropRate = .1f;
-    public float XPAmount = 100f;
+    [Range(0, 100)]
+    public int dropRate = 1;
+    public int XPAmount = 100;
 
     private static System.Random rand = new System.Random();
 
+    public bool died = false;
 
     public enum DamageType
     {
@@ -62,16 +63,17 @@ public class AgentStats : MonoBehaviour
     public void Start()
     {
         gmRef = FindObjectOfType<GameManager>();
+        currentHealth = baseHealth;
         currentHealth += gmRef.LevelNumber * baseHealth * (healthBuff / 100f); //increase currentHealth by baseHealth and damage buff
         pistolDamageOutput += (gmRef.LevelNumber * pistolDamageOutput * (damageBuff / 100f));
         shotgunDamageOutput += (gmRef.LevelNumber * shotgunDamageOutput * (damageBuff / 100f));
         meleeDamageOutput += (gmRef.LevelNumber * meleeDamageOutput * (damageBuff / 100f));
         attackMovementSpeed += (gmRef.LevelNumber * attackMovementSpeed * (attackSpeedBuff / 100f));
-        Debug.Log("Attack movement speed: " + attackMovementSpeed);
     }
 
-    public void ApplyDamage(float damageAmount, DamageType damageType)
+    public void ApplyDamage(float damageAmount, DamageType damageType, PlayerStats player)
     {
+        
         switch (damageType)
         {
             case DamageType.pistol:
@@ -90,9 +92,10 @@ public class AgentStats : MonoBehaviour
         }
 
         currentHealth -= damageAmount;
+
         if(currentHealth <= 0f)
         {
-            Die();
+            Die(player);
         }
     }
 
@@ -114,24 +117,30 @@ public class AgentStats : MonoBehaviour
         }
     }
 
-    public void Die()
+    public void Die(PlayerStats player)
     {
         //Decide to drop
         //this just gets random float
-        double sample = rand.NextDouble();
-        float chance = (float)sample % 1f;
+        if (died)
+            return;
 
+        if (player != null)
+            player.AddExp(XPAmount);
+
+        int chance = rand.Next(101);
         if (chance <= dropRate)
         {
+            
             //Decide what to drop
             GameObject drop = randomDrop();
             if (drop != null)
             {
-                Instantiate(drop, this.transform);
+                Instantiate(drop, transform.position,transform.rotation);
             }
         }
 
         GameObject.Destroy(gameObject);
+        died = true;
     }
 
     private GameObject randomDrop()

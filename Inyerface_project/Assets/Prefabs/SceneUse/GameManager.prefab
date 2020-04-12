@@ -44,3 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LevelNumber: 0
+  generateLevel: 1
+  skyBoxes:
+  - {fileID: 2100000, guid: 9f69d571a9cb54943b5a80ccd6b19e96, type: 2}
+  - {fileID: 2100000, guid: 269967744bbed1849a317b8175dc3f43, type: 2}
+  - {fileID: 2100000, guid: 246d4b1ad4a63004d8fcf3949494e5b3, type: 2}
