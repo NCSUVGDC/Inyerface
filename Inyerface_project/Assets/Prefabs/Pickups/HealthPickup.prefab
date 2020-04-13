@@ -236,7 +236,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e20c8ffe25627144823ba0db91bf8e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  quantity: 10
+  quantity: 50
   pickupType: 0
   UIunlockStartsNextLevel: 0
   pickupEffect: {fileID: 6162132652480529673}

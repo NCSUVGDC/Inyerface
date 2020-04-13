@@ -264,7 +264,7 @@ MonoBehaviour:
   shotgunDamageModifier: 1
   meleeDamageModifier: 1
   pistolDamageOutput: 100
-  shotgunDamageOutput: 15
+  shotgunDamageOutput: 25
   meleeDamageOutput: 85
   basicDamageOutput: 50
   healthBars: []
@@ -318,9 +318,9 @@ MonoBehaviour:
   shotgunMagazineMax: 2
   currentPistolMagazine: 0
   currentShotgunMagazine: 0
-  shotgunPellets: 10
-  shotgunRange: 25
-  shotgunVariance: 2
+  shotgunPellets: 40
+  shotgunRange: 30
+  shotgunVariance: 8
   pistolRange: 1000
   shotgunNoiseRange: 75
   pistolNoiseRange: 50
@@ -333,11 +333,11 @@ MonoBehaviour:
   pistolADSRot: {x: 0, y: 180, z: 0}
   pistolHipPos: {x: 0.258998, y: -0.163, z: 0.542}
   pistolHipRot: {x: 0, y: 180, z: 0}
-  shotgunADSPos: {x: 0, y: -0.116, z: 0.396}
+  shotgunADSPos: {x: 0, y: -0.17, z: 0.396}
   shotgunADSRot: {x: 0, y: 180, z: 0}
   shotgunHipPos: {x: 0.248, y: -0.242, z: 0.662}
   shotgunHipRot: {x: 0, y: 180, z: 0}
-  pistolADSFOV: 38
+  pistolADSFOV: 43
   shotgunADSFOV: 50
   normalFOV: 60
   pistolTransform: {fileID: 7976518594111039251}

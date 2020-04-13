@@ -207,8 +207,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3acd8f21060b0cd40b3af1d2a685b6db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderMovementSpeed: 4
-  attackMovementSpeed: 6
+  wanderMovementSpeed: 2
+  attackMovementSpeed: 3
   baseHealth: 100
   currentHealth: 0
   pistolDamageModifier: 0.85
